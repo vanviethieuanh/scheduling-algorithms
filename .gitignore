@@ -2,3 +2,10 @@
 /public/build/
 
 .DS_Store
+
+# Editor
+.vs
+.vscode
+
+# Ignore every dist folder
+dist/
