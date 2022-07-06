@@ -34,6 +34,19 @@
             value: (v) => v.responseTime,
         },
     ]
+
+    $: averageWaitTime =
+        finishedProcesses.reduce((acc, v) => acc + v.waitTime, 0) /
+        finishedProcesses.length
+    $: averageResponseTime =
+        finishedProcesses.reduce((acc, v) => acc + v.responseTime, 0) /
+        finishedProcesses.length
+    $: averageTurnaroundTime =
+        finishedProcesses.reduce((acc, v) => acc + v.turnaroundTime, 0) /
+        finishedProcesses.length
 </script>
 
-<Table data={finishedProcesses} {columnsMapper} />
+<Table data={finishedProcesses} {columnsMapper} editable={false} />
+<p>Average Wait Time: {averageWaitTime}</p>
+<p>Average Response Time: {averageResponseTime}</p>
+<p>Average Turnaround Time: {averageTurnaroundTime}</p>
