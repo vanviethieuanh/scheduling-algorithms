@@ -1,14 +1,35 @@
 <script lang="ts">
     export let editable = false
+    export let copyable = false
+
     export let columnsMapper: { title: string; value: Function }[] = []
     export let data: Object[] = []
+
+    export let copyMapper: Function
+
+    function copy(value: Function) {
+        const values = data.map((p) => value(p))
+        const clipboard = copyMapper(values)
+
+        navigator.clipboard.writeText(clipboard)
+    }
 </script>
 
 <table>
     <thead>
         <tr>
             {#each columnsMapper as column}
-                <th>{column.title}</th>
+                {#if copyable}
+                    <th>
+                        <button on:click={(e) => copy(column.value)}>
+                            {column.title}</button
+                        >
+                    </th>
+                {:else}
+                    <th>
+                        {column.title}
+                    </th>
+                {/if}
             {/each}
         </tr>
     </thead>

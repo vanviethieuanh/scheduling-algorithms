@@ -46,7 +46,18 @@
         finishedProcesses.length
 </script>
 
-<Table data={finishedProcesses} {columnsMapper} editable={false} />
-<p>Average Wait Time: {averageWaitTime}</p>
-<p>Average Response Time: {averageResponseTime}</p>
-<p>Average Turnaround Time: {averageTurnaroundTime}</p>
+<Table
+    data={finishedProcesses}
+    {columnsMapper}
+    editable={false}
+    copyable={true}
+    copyMapper={(values) => {
+        // Concat all values into a single string separated by commas
+        return values.join(',')
+    }}
+/>
+<div id="average-result">
+    <p>Average Wait Time: {averageWaitTime}</p>
+    <p>Average Response Time: {averageResponseTime}</p>
+    <p>Average Turnaround Time: {averageTurnaroundTime}</p>
+</div>
