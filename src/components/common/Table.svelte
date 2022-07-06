@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let editable = false
     export let columnsMapper: { title: string; value: Function }[] = []
     export let data: Object[] = []
 </script>
@@ -15,7 +16,11 @@
         {#each data as item}
             <tr>
                 {#each columnsMapper as column}
-                    <td>{column.value(item)}</td>
+                    <td>
+                        <div contenteditable={editable}>
+                            {column.value(item)}
+                        </div>
+                    </td>
                 {/each}
             </tr>
         {/each}

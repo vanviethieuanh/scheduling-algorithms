@@ -28,7 +28,6 @@
   "dependencies": {
     "moment": "^2.29.3",
     "sirv-cli": "^2.0.0",
-    "svelte-gantt": "^4.0.7-beta",
-    "svelte-table": "^0.3.4"
+    "svelte-gantt": "^4.0.7-beta"
   }
 }
