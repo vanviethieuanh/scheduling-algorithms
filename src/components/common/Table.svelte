@@ -1,6 +1,8 @@
 <script lang="ts">
+    // Import components
     import { Process } from 'src/dist/Process'
 
+    // Export parameters
     export let editable = false
     export let copyable = false
 
@@ -20,7 +22,7 @@
         navigator.clipboard.writeText(clipboard)
     }
 
-    function inputFilter(event: Event) {
+    function numberInputFilter(event: Event) {
         const input = event.target as HTMLInputElement
         const value = input.value
 
@@ -30,7 +32,7 @@
         }
     }
 
-    function postHandler(event: Event) {
+    function numberPostHandler(event: Event) {
         const input = event.target as HTMLInputElement
         const value = input.value
 
@@ -56,7 +58,8 @@
                 {#if copyable}
                     <th>
                         <button on:click={(e) => copy(e, column.value)}>
-                            {column.title}</button
+                            {column.title}
+                            <i class="fa-regular fa-clone" /></button
                         >
                     </th>
                 {:else}
@@ -78,8 +81,8 @@
                                     type={columnInputTypes[columnIndex]}
                                     disabled={!editable}
                                     value={column.value(item)}
-                                    on:input={inputFilter}
-                                    on:blur={postHandler}
+                                    on:input={numberInputFilter}
+                                    on:blur={numberPostHandler}
                                 />
                             {:else}
                                 <input type="text" value={column.value(item)} />
@@ -95,8 +98,10 @@
                     <td>
                         <button
                             name="delete"
-                            on:click={(e) => deleteRow(e, rowIndex)}>X</button
+                            on:click={(e) => deleteRow(e, rowIndex)}
                         >
+                            <i class="fa-solid fa-minus" />
+                        </button>
                     </td>
                 {/if}
             </tr>
@@ -105,7 +110,9 @@
 </table>
 
 {#if editable}
-    <button id="add-row" on:click={(e) => addRow(e)}>Add row</button>
+    <button id="add-row" on:click={(e) => addRow(e)}>
+        <i class="fa-solid fa-plus" /> Add row</button
+    >
 {/if}
 
 <style>

@@ -56,6 +56,8 @@
 <style>
     @import 'https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css';
     main {
+        font-family: 'Montserrat', sans-serif;
+
         text-align: center;
         padding: 1em;
         max-width: 240px;
