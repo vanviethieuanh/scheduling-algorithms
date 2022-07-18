@@ -60,6 +60,10 @@ export default {
                     find: '@components',
                     replacement: path.resolve(projectRootDir, 'src/components'),
                 },
+                {
+                    find: '@store',
+                    replacement: path.resolve(projectRootDir, 'src/store.js'),
+                },
             ],
         }),
 

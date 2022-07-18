@@ -16,6 +16,18 @@
             "@components/*": [
                 "./src/components/*"
             ],
+            "@pages/*": [
+                "./src/pages/*"
+            ],
+            "@styles/*": [
+                "./src/styles/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ],
+            "@store": [
+                "./src/store.js"
+            ]
         },
         "moduleResolution": "node",
         "baseUrl": "./",

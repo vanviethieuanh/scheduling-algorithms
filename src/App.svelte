@@ -1,10 +1,14 @@
 <script lang="ts">
     // Import components
-    import Result from './components/Result.svelte'
+    import Table from '@components/common/Table.svelte'
+    import Result from '@components/Result.svelte'
 
     // Import logics
     import { Process } from '@logic/Process'
-    import { SJF } from '@logic/Scheduler'
+    import * as Scheduler from '@logic/Scheduler'
+
+    // Import store variables
+    import { processes } from '@store'
 
     const mockProcesses = [
         new Process('A', 0, 5, 1),
@@ -13,6 +17,7 @@
         new Process('D', 3, 2, 4),
         new Process('E', 4, 1, null),
     ]
+
     // define column configs
     const inputColumnsMapper = [
         {
@@ -29,29 +34,23 @@
         },
         {
             title: 'Priority',
-            value: (v) => (v.priority ? v.priority : '-'),
+            value: (v) => (v.priority ? v.priority : '0'),
         },
     ]
 
     // Clone MockProcesses to pass to SJF
-    let result = SJF([
-        new Process('A', 0, 5, 1),
-        new Process('B', 1, 4, 2),
-        new Process('C', 2, 3, 3),
-        new Process('D', 3, 2, 4),
-        new Process('E', 4, 1, null),
-    ])
+    $: result = Scheduler.SJF(mockProcesses.slice())
 </script>
 
 <main>
-    {@debug result}
-
+    <Table
+        data={mockProcesses}
+        columnsMapper={inputColumnsMapper}
+        columnInputTypes={['text', 'number', 'number', 'number']}
+        editable={true}
+        copyable={false}
+    />
     <Result finishedProcesses={result} />
-
-    <p>
-        Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-        how to build Svelte apps.
-    </p>
 </main>
 
 <style>
