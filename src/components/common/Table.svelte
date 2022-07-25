@@ -59,8 +59,8 @@
                     <th>
                         <button on:click={(e) => copy(e, column.value)}>
                             {column.title}
-                            <i class="fa-regular fa-clone" /></button
-                        >
+                            <i class="fa-regular fa-clone" />
+                        </button>
                     </th>
                 {:else}
                     <th>
@@ -116,11 +116,14 @@
 {/if}
 
 <style>
-    input:disabled {
-        background-color: #f0f0f0;
-    }
-
     #add-row {
         width: 100%;
+    }
+
+    table {
+        width: 100%;
+    }
+    th {
+        font-weight: 600;
     }
 </style>

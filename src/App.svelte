@@ -43,6 +43,7 @@
 </script>
 
 <main>
+    <h1 class="text-3xl font-bold underline">Input</h1>
     <Table
         data={mockProcesses}
         columnsMapper={inputColumnsMapper}
@@ -50,10 +51,16 @@
         editable={true}
         copyable={false}
     />
+    <h1>Result</h1>
     <Result finishedProcesses={result} />
+    <h1>Gantt Chart</h1>
 </main>
 
 <style>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
     @import 'https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css';
     main {
         font-family: 'Montserrat', sans-serif;
