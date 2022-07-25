@@ -64,6 +64,30 @@ export default {
                     find: '@store',
                     replacement: path.resolve(projectRootDir, 'src/store.js'),
                 },
+                {
+                    find: '@styles',
+                    replacement: path.resolve(projectRootDir, 'src/styles'),
+                },
+                {
+                    find: '@utils',
+                    replacement: path.resolve(projectRootDir, 'src/utils'),
+                },
+                {
+                    find: '@assets',
+                    replacement: path.resolve(projectRootDir, 'src/assets'),
+                },
+                {
+                    find: '@views',
+                    replacement: path.resolve(projectRootDir, 'src/views'),
+                },
+                {
+                    find: '@src',
+                    replacement: path.resolve(projectRootDir, 'src'),
+                },
+                {
+                    find: '@models',
+                    replacement: path.resolve(projectRootDir, 'src/models'),
+                },
             ],
         }),
 

@@ -27,6 +27,15 @@
             ],
             "@store": [
                 "./src/store.js"
+            ],
+            "@src/*": [
+                "./src/*"
+            ],
+            "@*": [
+                "./src/*"
+            ],
+            "@models/*": [
+                "./src/models/*"
             ]
         },
         "moduleResolution": "node",
