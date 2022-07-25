@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 
 // Import logics
-import { Process } from '@logic/Process'
+import { Process } from '@models/Process'
 
 export const processes = writable([
     new Process('A', 0, 5, 1),

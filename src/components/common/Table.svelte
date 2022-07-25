@@ -3,8 +3,9 @@
     import { Process } from 'src/dist/Process'
 
     // Export parameters
-    export let editable = false
-    export let copyable = false
+    export let entityName: string = 'Row'
+    export let editable: boolean = false
+    export let copyable: boolean = false
 
     export let columnsMapper: { title: string; value: Function }[] = []
     export let data: Object[] = []
@@ -34,12 +35,9 @@
 
     function numberPostHandler(event: Event) {
         const input = event.target as HTMLInputElement
-        const value = input.value
+        const value = Number(input.value)
 
-        // if value is not numeric, set it to 0
-        if (!/^\d+$/.test(value)) {
-            input.value = '0'
-        }
+        input.value = value.toString()
     }
 
     function deleteRow(event: Event, index: number) {
@@ -111,7 +109,7 @@
 
 {#if editable}
     <button id="add-row" on:click={(e) => addRow(e)}>
-        <i class="fa-solid fa-plus" /> Add row</button
+        <i class="fa-solid fa-plus" /> Add {entityName}</button
     >
 {/if}
 
@@ -122,8 +120,15 @@
 
     table {
         width: 100%;
+        table-layout: auto;
     }
     th {
         font-weight: 600;
+    }
+    td {
+        width: fit-content;
+    }
+    input {
+        width: 100%;
     }
 </style>

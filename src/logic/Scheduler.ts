@@ -1,4 +1,4 @@
-import type { Process } from '@logic/Process'
+import type { Process } from '@models/Process'
 
 // Sortest job first (SJF)
 export function SJF(processes: Process[]) {

@@ -4,7 +4,7 @@
     import Result from '@components/Result.svelte'
 
     // Import logics
-    import { Process } from '@logic/Process'
+    import { Process } from '@models/Process'
     import * as Scheduler from '@logic/Scheduler'
 
     // Import store variables
@@ -44,13 +44,17 @@
 
 <main>
     <h1 class="text-3xl font-bold underline">Input</h1>
-    <Table
-        data={mockProcesses}
-        columnsMapper={inputColumnsMapper}
-        columnInputTypes={['text', 'number', 'number', 'number']}
-        editable={true}
-        copyable={false}
-    />
+    <div class="table-container">
+        <Table
+            data={mockProcesses}
+            columnsMapper={inputColumnsMapper}
+            columnInputTypes={['text', 'number', 'number', 'number']}
+            editable={true}
+            copyable={false}
+            entityName="process"
+        />
+    </div>
+
     <h1>Result</h1>
     <Result finishedProcesses={result} />
     <h1>Gantt Chart</h1>
@@ -69,6 +73,10 @@
         padding: 1em;
         max-width: 240px;
         margin: 0 auto;
+    }
+
+    .table-container {
+        width: 40%;
     }
 
     @media (min-width: 640px) {
