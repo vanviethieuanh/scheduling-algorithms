@@ -1,7 +1,6 @@
 <script lang="ts">
     // Import components
     import Table from '@components/common/Table.svelte'
-    import Result from '@components/Result.svelte'
 
     // Import logics
     import { Process } from '@models/Process'
@@ -38,26 +37,62 @@
         },
     ]
 
+    const resultColumnsMapper = [
+        {
+            title: 'Name',
+            value: (v) => v.name,
+        },
+        {
+            title: 'Finish Time',
+            value: (v) => v.finishedTime,
+        },
+        {
+            title: 'Wait Time',
+            value: (v) => v.waitTime,
+        },
+        {
+            title: 'Turnaround Time',
+            value: (v) => v.turnaroundTime,
+        },
+        {
+            title: 'Response Time',
+            value: (v) => v.responseTime,
+        },
+    ]
+
     // Clone MockProcesses to pass to SJF
     $: result = Scheduler.SJF(mockProcesses.slice())
+
+    $: averageWaitTime =
+        result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
+    $: averageResponseTime =
+        result.reduce((acc, v) => acc + v.responseTime, 0) / result.length
+    $: averageTurnaroundTime =
+        result.reduce((acc, v) => acc + v.turnaroundTime, 0) / result.length
 </script>
 
 <main>
-    <h1 class="text-3xl font-bold underline">Input</h1>
-    <div class="table-container">
-        <Table
-            data={mockProcesses}
-            columnsMapper={inputColumnsMapper}
-            columnInputTypes={['text', 'number', 'number', 'number']}
-            editable={true}
-            copyable={false}
-            entityName="process"
-        />
-    </div>
+    <div class="grid-displayer">
+        <div class="table-container">
+            <Table
+                data={mockProcesses}
+                columnsMapper={inputColumnsMapper}
+                columnInputTypes={['text', 'number', 'number', 'number']}
+                editable={true}
+                copyable={false}
+                entityName="process"
+            />
+        </div>
 
-    <h1>Result</h1>
-    <Result finishedProcesses={result} />
-    <h1>Gantt Chart</h1>
+        <div class="result-container">
+            <Table
+                columnsMapper={resultColumnsMapper}
+                data={result}
+                editable={false}
+                copyable={true}
+            />
+        </div>
+    </div>
 </main>
 
 <style>
@@ -77,6 +112,15 @@
 
     .table-container {
         width: 40%;
+    }
+
+    .result-container {
+        width: 50%;
+    }
+
+    .grid-displayer {
+        display: flex;
+        justify-content: space-around;
     }
 
     @media (min-width: 640px) {

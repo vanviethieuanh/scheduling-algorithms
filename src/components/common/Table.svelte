@@ -131,4 +131,8 @@
     input {
         width: 100%;
     }
+
+    thead button {
+        font-size: 14px;
+    }
 </style>
