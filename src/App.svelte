@@ -9,7 +9,7 @@
     // Import store variables
     import { processes } from '@store'
 
-    const mockProcesses = [
+    let inputProcesses = [
         new Process('A', 0, 5, 1),
         new Process('B', 1, 4, 2),
         new Process('C', 2, 3, 3),
@@ -21,47 +21,74 @@
     const inputColumnsMapper = [
         {
             title: 'Name',
-            value: (v) => v.name,
+            getter: (v) => v.name,
+            setter: (process, value) => {
+                process.name = value
+            },
         },
         {
             title: 'Arrival Time',
-            value: (v) => v.arrivalTime,
+            getter: (v) => v.arrivalTime,
+            setter: (process, value) => {
+                process.arrivalTime = value
+            },
         },
         {
             title: 'Burst Time',
-            value: (v) => v.burstTime,
+            getter: (v) => v.burstTime,
+            setter: (process, value) => {
+                process.burstTime = value
+            },
         },
         {
             title: 'Priority',
-            value: (v) => (v.priority ? v.priority : '0'),
+            getter: (v) => (v.priority ? v.priority : '0'),
+            setter: (process, value) => {
+                process.priority = value
+            },
         },
     ]
 
     const resultColumnsMapper = [
         {
             title: 'Name',
-            value: (v) => v.name,
+            getter: (v) => v.name,
+            setter: (obj, value) => {
+                throw 'Not Implemented'
+            },
         },
         {
             title: 'Finish Time',
-            value: (v) => v.finishedTime,
+            getter: (v) => v.finishedTime,
+            setter: (obj, value) => {
+                throw 'Not Implemented'
+            },
         },
         {
             title: 'Wait Time',
-            value: (v) => v.waitTime,
+            getter: (v) => v.waitTime,
+            setter: (obj, value) => {
+                throw 'Not Implemented'
+            },
         },
         {
             title: 'Turnaround Time',
-            value: (v) => v.turnaroundTime,
+            getter: (v) => v.turnaroundTime,
+            setter: (obj, value) => {
+                throw 'Not Implemented'
+            },
         },
         {
             title: 'Response Time',
-            value: (v) => v.responseTime,
+            getter: (v) => v.responseTime,
+            setter: (obj, value) => {
+                throw 'Not Implemented'
+            },
         },
     ]
 
     // Clone MockProcesses to pass to SJF
-    $: result = Scheduler.SJF(mockProcesses.slice())
+    $: result = Scheduler.SJF(inputProcesses.slice())
 
     $: averageWaitTime =
         result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
@@ -69,18 +96,23 @@
         result.reduce((acc, v) => acc + v.responseTime, 0) / result.length
     $: averageTurnaroundTime =
         result.reduce((acc, v) => acc + v.turnaroundTime, 0) / result.length
+
+    function updateInput(event) {
+        inputProcesses = event.detail.data
+    }
 </script>
 
 <main>
     <div class="grid-displayer">
         <div class="table-container">
             <Table
-                data={mockProcesses}
+                bind:data={inputProcesses}
                 columnsMapper={inputColumnsMapper}
                 columnInputTypes={['text', 'number', 'number', 'number']}
                 editable={true}
                 copyable={false}
                 entityName="process"
+                on:change={updateInput}
             />
         </div>
 

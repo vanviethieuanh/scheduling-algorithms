@@ -1,13 +1,18 @@
 <script lang="ts">
-    // Import components
-    import { Process } from 'src/dist/Process'
+    import { Process } from '@models/Process'
+    import { createEventDispatcher } from 'svelte'
 
-    // Export parameters
+    const dispatch = createEventDispatcher()
+
     export let entityName: string = 'Row'
     export let editable: boolean = false
     export let copyable: boolean = false
 
-    export let columnsMapper: { title: string; value: Function }[] = []
+    export let columnsMapper: {
+        title: string
+        getter: Function
+        setter: Function
+    }[] = []
     export let data: Object[] = []
     export let columnInputTypes: string[] = []
 
@@ -23,21 +28,16 @@
         navigator.clipboard.writeText(clipboard)
     }
 
-    function numberInputFilter(event: Event) {
-        const input = event.target as HTMLInputElement
-        const value = input.value
-
-        // if input is not numeric, clear it
-        if (!/^\d+$/.test(value)) {
-            input.value = ''
-        }
-    }
-
-    function numberPostHandler(event: Event) {
+    function numberPostHandler(event: Event, setter: Function, index: number) {
         const input = event.target as HTMLInputElement
         const value = Number(input.value)
 
         input.value = value.toString()
+        setter(data[index], value)
+
+        dispatch('change', {
+            data: data,
+        })
     }
 
     function deleteRow(event: Event, index: number) {
@@ -55,7 +55,7 @@
             {#each columnsMapper as column}
                 {#if copyable}
                     <th>
-                        <button on:click={(e) => copy(e, column.value)}>
+                        <button on:click={(e) => copy(e, column.getter)}>
                             {column.title}
                             <i class="fa-regular fa-clone" />
                         </button>
@@ -78,15 +78,22 @@
                                 <input
                                     type={columnInputTypes[columnIndex]}
                                     disabled={!editable}
-                                    value={column.value(item)}
-                                    on:input={numberInputFilter}
-                                    on:blur={numberPostHandler}
+                                    value={column.getter(item)}
+                                    on:input={(e) =>
+                                        numberPostHandler(
+                                            e,
+                                            column.setter,
+                                            rowIndex
+                                        )}
                                 />
                             {:else}
-                                <input type="text" value={column.value(item)} />
+                                <input
+                                    type="text"
+                                    value={column.getter(item)}
+                                />
                             {/if}
                         {:else}
-                            {column.value(item)}
+                            {column.getter(item)}
                         {/if}
                     </td>
                 {/each}
