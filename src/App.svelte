@@ -8,6 +8,7 @@
 
     // Import store variables
     import { processes } from '@store'
+    import Grantt from '@components/Grantt.svelte';
 
     let inputProcesses = [
         new Process('A', 0, 5, 1),
@@ -97,11 +98,14 @@
     $: averageTurnaroundTime =
         result.reduce((acc, v) => acc + v.turnaroundTime, 0) / result.length
 
+    $: runs = result
+        .map(process => process.toGranttPeriods())
+        .flat()
+
     function updateInput(event) {
         inputProcesses = event.detail.data
     }
 </script>
-
 <main>
     <div class="grid-displayer">
         <div class="table-container">
@@ -124,6 +128,9 @@
                 copyable={true}
             />
         </div>
+    </div>
+    <div>
+        <Grantt runs={runs}></Grantt>
     </div>
 </main>
 
