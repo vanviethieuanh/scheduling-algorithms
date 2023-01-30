@@ -1,7 +1,10 @@
 import type { Process } from '@models/Process'
 
 // Sortest job first (SJF)
-export function SJF(processes: Process[]) {
+export function SJF(processes: Process[]): Process[] {
+    // Clear all cache
+    processes.forEach(process => process.clearCache())
+
     // Get name order of processes
     const namesOrder = processes.map((p) => p.name)
 
@@ -23,11 +26,6 @@ export function SJF(processes: Process[]) {
         let firstProcess = arrivedProcessesAtCurrentTime.shift()
         firstProcess.execute(firstProcess.burstTime, time)
         time += firstProcess.burstTime
-
-        console.log(
-            `Process ${firstProcess.name} finished at ${firstProcess.finishedTime}`
-        )
-        console.log(arrivedProcessesAtCurrentTime)
 
         // Add finished process to list
         finishedProcesses.push(firstProcess)
