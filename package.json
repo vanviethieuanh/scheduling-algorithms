@@ -8,6 +8,7 @@
     "build": "npm run build:tailwind && rollup -c",
     "start": "sirv public",
     "serve": "serve public -p 80",
+    "pretty":"prettier --write \"./src/**/*.{ts,svelte,html}\"",
     "dev": "concurrently \"rollup -c -w\" \"npm run watch:tailwind\""
   },
   "devDependencies": {
@@ -21,6 +22,8 @@
     "cross-env": "^7.0.3",
     "postcss": "^8.4.14",
     "postcss-cli": "^7.1.2",
+    "prettier": "^2.8.3",
+    "prettier-plugin-svelte": "^2.9.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
