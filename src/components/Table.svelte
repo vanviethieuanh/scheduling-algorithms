@@ -15,12 +15,12 @@
     }
 
     const dispatch = createEventDispatcher()
-    let nameIndex = 0
+    let nameIndex = 6
 
     export let columnsMapper: ColumnMapper[] = []
     export let data: Object[] = []
 
-    function copy(event: Event, value: Function, copyMapper?: Function) {
+    function copy(value: Function, copyMapper?: Function) {
         const values = data.map((p) => value(p))
         const clipboard = copyMapper
             ? copyMapper(values)
@@ -53,11 +53,13 @@
         })
     }
 
-    function deleteRow(event: Event, index: number) {
+    function deleteRow(index: number) {
         data = data.filter((_, i) => i !== index)
     }
 
-    function addRow(event: Event) {
+    function addRow() {
+        if (data.length === 10) return
+
         data = [...data, new Process(`P-${nameIndex}`, 0, 1, 0)]
         nameIndex += 1
     }
@@ -75,11 +77,7 @@
                                 <button
                                     disabled={!column.copyable}
                                     on:click={(e) =>
-                                        copy(
-                                            e,
-                                            column.getter,
-                                            column.copyMapper
-                                        )}
+                                        copy(column.getter, column.copyMapper)}
                                 >
                                     <i class="fa-solid fa-copy" />
                                 </button>
@@ -89,7 +87,7 @@
                 {/each}
                 <button
                     id="add-row"
-                    on:click={(e) => addRow(e)}
+                    on:click={addRow}
                 >
                     <i class="fa-solid fa-plus" /></button
                 >
@@ -136,7 +134,7 @@
                     <td>
                         <button
                             name="delete"
-                            on:click={(e) => deleteRow(e, rowIndex)}
+                            on:click={(e) => deleteRow(rowIndex)}
                         >
                             <i class="fa-solid fa-trash-can" />
                         </button>

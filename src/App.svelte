@@ -10,11 +10,11 @@
     import Grantt from "@components/Grantt.svelte"
 
     let inputProcesses = [
-        new Process("A", 0, 5, 1),
-        new Process("B", 1, 4, 2),
-        new Process("C", 2, 3, 3),
-        new Process("D", 3, 2, 4),
-        new Process("E", 4, 1, null),
+        new Process("P-1", 0, 5, 1),
+        new Process("P-2", 1, 4, 2),
+        new Process("P-3", 2, 3, 3),
+        new Process("P-4", 3, 2, 4),
+        new Process("P-5", 4, 1, null),
     ]
 
     // define column configs
