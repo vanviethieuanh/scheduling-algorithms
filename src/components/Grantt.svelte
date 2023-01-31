@@ -91,7 +91,7 @@
         grid-column: var(--start) / var(--end);
         grid-row: var(--rows);
 
-        min-height: 50px;
+        min-height: 30px;
         display: grid;
         place-content: center;
     }

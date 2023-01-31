@@ -7,7 +7,6 @@
     import * as Scheduler from "@logic/Scheduler"
 
     // Import store variables
-    import { processes } from "@store"
     import Grantt from "@components/Grantt.svelte"
 
     let inputProcesses = [

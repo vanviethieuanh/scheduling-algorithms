@@ -46,7 +46,7 @@
     }
 
     function addRow(event: Event) {
-        data = [...data, new Process(`New Process ${nameIndex}`, 0, 1, 0)]
+        data = [...data, new Process(`P-${nameIndex}`, 0, 1, 0)]
         nameIndex += 1
     }
 </script>
