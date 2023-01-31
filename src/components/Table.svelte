@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Process } from "@models/Process"
     import { createEventDispatcher } from "svelte"
+    import { DefaultCopyMapper } from "@utils/DefaultMappers"
 
     type ColumnMapper = {
         title: string
@@ -8,6 +9,7 @@
         min?: number
         editable?: boolean
         copyable?: boolean
+        copyMapper?: Function
         getter: Function
         setter: Function
     }
@@ -15,19 +17,14 @@
     const dispatch = createEventDispatcher()
 
     export let entityName: string = "Row"
-
     export let columnsMapper: ColumnMapper[] = []
-
     export let data: Object[] = []
 
-    export let copyMapper: Function = (values) => {
-        // Concat all values into a single string separated by commas
-        return values.join(",")
-    }
-
-    function copy(event: Event, value: Function) {
+    function copy(event: Event, value: Function, copyMapper?: Function) {
         const values = data.map((p) => value(p))
-        const clipboard = copyMapper(values)
+        const clipboard = copyMapper
+            ? copyMapper(values)
+            : DefaultCopyMapper(values)
 
         navigator.clipboard.writeText(clipboard)
     }
@@ -61,7 +58,8 @@
                     <th>
                         <button
                             class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800"
-                            on:click={(e) => copy(e, column.getter)}
+                            on:click={(e) =>
+                                copy(e, column.getter, column.copyMapper)}
                         >
                             {column.title}
                             <i class="fa-regular fa-clone" />

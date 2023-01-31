@@ -1,6 +1,6 @@
 <script lang="ts">
     // Import components
-    import Table from "@components/common/Table.svelte"
+    import Table from "@components/Table.svelte"
 
     // Import logics
     import { Process } from "@models/Process"
