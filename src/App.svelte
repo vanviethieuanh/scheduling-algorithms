@@ -27,6 +27,7 @@
             setter: (process, value) => {
                 process.name = value
             },
+            editable: true,
         },
         {
             title: "Arrival Time",
@@ -113,32 +114,38 @@
 </script>
 
 <main>
-    <Table
-        bind:data={result}
-        columnsMapper={inputColumnsMapper}
-        entityName="process"
-        on:change={updateInput}
-    />
-    <Grantt {runs} />
+    <div class="container">
+        <Grantt {runs} />
+        <div class="table">
+            <Table
+                bind:data={result}
+                columnsMapper={inputColumnsMapper}
+                on:change={updateInput}
+            />
+        </div>
+    </div>
 </main>
 
-<style
-    global
-    lang="postcss"
->
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-
+<style>
     @import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
 
     main {
         font-family: "Montserrat", sans-serif;
 
         text-align: center;
-        padding: 1em;
+        margin: 0;
         max-width: 240px;
-        margin: 0 auto;
+
+        backdrop-filter: blur(50px);
+        background-color: rgba(240, 240, 255, 0.6);
+        height: 100%;
+    }
+
+    .container {
+        padding: 3rem 2rem;
+    }
+    .table {
+        margin-top: 50px;
     }
 
     @media (min-width: 640px) {

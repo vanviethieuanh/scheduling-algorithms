@@ -16,7 +16,6 @@
 
     const dispatch = createEventDispatcher()
 
-    export let entityName: string = "Row"
     export let columnsMapper: ColumnMapper[] = []
     export let data: Object[] = []
 
@@ -50,101 +49,136 @@
     }
 </script>
 
-<table>
-    <thead>
-        <tr>
-            {#each columnsMapper as column}
-                {#if column.copyable}
-                    <th>
-                        <button
-                            class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800"
-                            on:click={(e) =>
-                                copy(e, column.getter, column.copyMapper)}
-                        >
-                            {column.title}
-                            <i class="fa-regular fa-clone" />
-                        </button>
-                    </th>
-                {:else}
-                    <th>
-                        {column.title}
-                    </th>
-                {/if}
-            {/each}
-        </tr>
-    </thead>
-    <tbody>
-        {#each data as item, rowIndex}
+<div class="component">
+    <table>
+        <thead>
             <tr>
-                {#each columnsMapper as column, columnIndex}
-                    <td>
-                        {#if column.editable}
-                            {#if column.dataType === "number"}
-                                <input
-                                    type={column.dataType}
-                                    min={column.min ?? "unset"}
-                                    disabled={!column.editable}
-                                    value={column.getter(item)}
-                                    on:input={(e) =>
-                                        numberPostHandler(
+                {#each columnsMapper as column}
+                    <th>
+                        <div class="header">
+                            <h5>{column.title}</h5>
+                            {#if column.copyable}
+                                <button
+                                    disabled={!column.copyable}
+                                    on:click={(e) =>
+                                        copy(
                                             e,
-                                            column.setter,
-                                            rowIndex
+                                            column.getter,
+                                            column.copyMapper
                                         )}
-                                />
-                            {:else}
-                                <input
-                                    type="text"
-                                    value={column.getter(item)}
-                                />
+                                >
+                                    <i class="fa-solid fa-copy" />
+                                </button>
                             {/if}
-                        {:else}
-                            {column.getter(item)}
-                        {/if}
-                    </td>
+                        </div>
+                    </th>
                 {/each}
-
-                <!-- Delete button in the end of each line if Editable -->
-                <td>
-                    <button
-                        name="delete"
-                        on:click={(e) => deleteRow(e, rowIndex)}
-                    >
-                        <i class="fa-solid fa-minus" />
-                    </button>
-                </td>
+                <button
+                    id="add-row"
+                    on:click={(e) => addRow(e)}
+                >
+                    <i class="fa-solid fa-plus" /></button
+                >
             </tr>
-        {/each}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {#each data as item, rowIndex}
+                <tr>
+                    {#each columnsMapper as column, columnIndex}
+                        <td>
+                            {#if column.editable}
+                                {#if column.dataType === "number"}
+                                    <input
+                                        type={column.dataType}
+                                        min={column.min ?? "unset"}
+                                        disabled={!column.editable}
+                                        value={column.getter(item)}
+                                        on:input={(e) =>
+                                            numberPostHandler(
+                                                e,
+                                                column.setter,
+                                                rowIndex
+                                            )}
+                                    />
+                                {:else}
+                                    <input
+                                        type="text"
+                                        value={column.getter(item)}
+                                    />
+                                {/if}
+                            {:else}
+                                {column.getter(item)}
+                            {/if}
+                        </td>
+                    {/each}
 
-<button
-    id="add-row"
-    on:click={(e) => addRow(e)}
->
-    <i class="fa-solid fa-plus" /> Add {entityName}</button
->
+                    <!-- Delete button in the end of each line. -->
+                    <td>
+                        <button
+                            name="delete"
+                            on:click={(e) => deleteRow(e, rowIndex)}
+                        >
+                            <i class="fa-solid fa-minus" />
+                        </button>
+                    </td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+</div>
 
-<style
-    global
-    lang="postcss"
->
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-
+<style lang="scss">
+    .component {
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
+        user-select: none;
+    }
     #add-row {
-        width: 100%;
+        margin: 0 1rem;
+        font-size: 1rem;
+
+        border: rgba($color: #fff, $alpha: 0) 1px solid;
+        background-color: rgba($color: #fff, $alpha: 0.2);
+        border: rgba($color: #fff, $alpha: 0.2) 1px solid;
     }
     table {
         width: 100%;
-        table-layout: auto;
     }
     th {
         font-weight: 600;
     }
     td {
-        width: fit-content;
+        vertical-align: middle;
+        text-align: center;
+
+        input {
+            max-width: 100px;
+
+            vertical-align: middle;
+            text-align: center;
+
+            background-color: rgba($color: #fff, $alpha: 0.3);
+            border: none;
+            border-radius: 3px;
+            margin: 0.5rem 0;
+
+            &:hover {
+                background-color: rgba($color: #fff, $alpha: 0.7);
+            }
+            &:focus {
+                background-color: rgba($color: #fff, $alpha: 0.7);
+                box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
+                outline: none;
+            }
+        }
+    }
+    tr {
+        border-bottom: 1px solid rgba($color: #000030, $alpha: 0.1);
+        &:last-child {
+            border-bottom: none;
+        }
     }
     input {
         width: 100%;
@@ -152,5 +186,33 @@
 
     thead button {
         font-size: 14px;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+            margin-left: 1rem;
+        }
+    }
+    button {
+        margin: 0;
+
+        $button-size: 32px;
+
+        color: rgba($color: #000030, $alpha: 0.4);
+        background-color: rgba($color: #fff, $alpha: 0);
+        border: rgba($color: #fff, $alpha: 0) 1px solid;
+
+        border-radius: 5px;
+
+        width: $button-size;
+        height: $button-size;
+
+        cursor: pointer;
+
+        &:hover {
+            color: rgba($color: #000030, $alpha: 0.8);
+        }
     }
 </style>
