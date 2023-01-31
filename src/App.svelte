@@ -1,13 +1,12 @@
 <script lang="ts">
-    // Import components
+    // Components
     import Table from "@components/Table.svelte"
+    import Grantt from "@components/Grantt.svelte"
+    import Algorithms from "@components/Algorithms.svelte"
 
-    // Import logics
+    // Logics
     import { Process } from "@models/Process"
     import * as Scheduler from "@logic/Scheduler"
-
-    // Import store variables
-    import Grantt from "@components/Grantt.svelte"
 
     let inputProcesses = [
         new Process("P-1", 0, 5, 1),
@@ -115,6 +114,7 @@
 <main>
     <div class="container">
         <Grantt {runs} />
+        <Algorithms />
         <div class="table">
             <Table
                 bind:data={inputProcesses}
@@ -136,7 +136,6 @@
 
         text-align: center;
         margin: 0;
-        max-width: 240px;
 
         backdrop-filter: blur(50px);
         background-color: rgba(0, 0, 50, 0.2);
@@ -153,6 +152,8 @@
 
     .container {
         padding: 3rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
     }
     .table {
         margin-top: 50px;
