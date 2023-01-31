@@ -32,6 +32,10 @@
 </div>
 
 <style lang="postcss">
+    * {
+        user-select: none;
+    }
+
     .row {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -50,7 +54,7 @@
 
     .grantt {
         background-color: #222222;
-        height: 20px;
+        height: 100%;
         border-radius: 3px;
         grid-column: var(--start) / var(--end);
     }

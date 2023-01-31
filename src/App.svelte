@@ -113,19 +113,13 @@
 </script>
 
 <main>
-    <div class="grid-displayer">
-        <div class="table-container">
-            <Table
-                bind:data={result}
-                columnsMapper={inputColumnsMapper}
-                entityName="process"
-                on:change={updateInput}
-            />
-        </div>
-    </div>
-    <div>
-        <Grantt {runs} />
-    </div>
+    <Table
+        bind:data={result}
+        columnsMapper={inputColumnsMapper}
+        entityName="process"
+        on:change={updateInput}
+    />
+    <Grantt {runs} />
 </main>
 
 <style
@@ -145,19 +139,6 @@
         padding: 1em;
         max-width: 240px;
         margin: 0 auto;
-    }
-
-    .table-container {
-        width: 40%;
-    }
-
-    .result-container {
-        width: 50%;
-    }
-
-    .grid-displayer {
-        display: flex;
-        justify-content: space-between;
     }
 
     @media (min-width: 640px) {
