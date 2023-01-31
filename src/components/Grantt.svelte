@@ -12,7 +12,10 @@
         <tr>
             <td>{name}</td>
             <td>
-                <div class="bar" style={`--cols: ${cols}`}>
+                <div
+                    class="bar"
+                    style={`--cols: ${cols}`}
+                >
                     {#each runs as run}
                         {#if run.periodName === name}
                             <div
@@ -34,7 +37,7 @@
         padding-right: min(1rem, 20px);
     }
 
-    td:last-child{
+    td:last-child {
         background-color: #efefef;
     }
 

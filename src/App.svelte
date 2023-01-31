@@ -22,6 +22,7 @@
     const inputColumnsMapper = [
         {
             title: "Name",
+            dataType: "text",
             getter: (v) => v.name,
             setter: (process, value) => {
                 process.name = value
@@ -29,20 +30,25 @@
         },
         {
             title: "Arrival Time",
+            dataType: "number",
             getter: (v) => v.arrivalTime,
             setter: (process, value) => {
                 process.arrivalTime = value
             },
+            min: 1,
         },
         {
             title: "Burst Time",
+            dataType: "number",
             getter: (v) => v.burstTime,
             setter: (process, value) => {
                 process.burstTime = value
             },
+            min: 1,
         },
         {
             title: "Priority",
+            dataType: "number",
             getter: (v) => (v.priority ? v.priority : "0"),
             setter: (process, value) => {
                 process.priority = value
@@ -53,6 +59,7 @@
     const resultColumnsMapper = [
         {
             title: "Name",
+            dataType: "text",
             getter: (v) => v.name,
             setter: (obj, value) => {
                 throw "Not Implemented"
@@ -60,6 +67,7 @@
         },
         {
             title: "Finish Time",
+            dataType: "number",
             getter: (v) => v.finishedTime,
             setter: (obj, value) => {
                 throw "Not Implemented"
@@ -67,6 +75,7 @@
         },
         {
             title: "Wait Time",
+            dataType: "text",
             getter: (v) => v.waitTime,
             setter: (obj, value) => {
                 throw "Not Implemented"
@@ -74,6 +83,7 @@
         },
         {
             title: "Turnaround Time",
+            dataType: "text",
             getter: (v) => v.turnaroundTime,
             setter: (obj, value) => {
                 throw "Not Implemented"
@@ -81,6 +91,7 @@
         },
         {
             title: "Response Time",
+            dataType: "text",
             getter: (v) => v.responseTime,
             setter: (obj, value) => {
                 throw "Not Implemented"
@@ -111,7 +122,6 @@
             <Table
                 bind:data={inputProcesses}
                 columnsMapper={inputColumnsMapper}
-                columnInputTypes={["text", "number", "number", "number"]}
                 editable={true}
                 copyable={false}
                 entityName="process"
@@ -133,7 +143,10 @@
     </div>
 </main>
 
-<style global lang="postcss">
+<style
+    global
+    lang="postcss"
+>
     @tailwind base;
     @tailwind components;
     @tailwind utilities;

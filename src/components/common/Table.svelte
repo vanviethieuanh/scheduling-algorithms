@@ -1,24 +1,25 @@
 <script lang="ts">
-    import { Process } from '@models/Process'
-    import { createEventDispatcher } from 'svelte'
+    import { Process } from "@models/Process"
+    import { createEventDispatcher } from "svelte"
 
     const dispatch = createEventDispatcher()
 
-    export let entityName: string = 'Row'
+    export let entityName: string = "Row"
     export let editable: boolean = false
     export let copyable: boolean = false
 
     export let columnsMapper: {
         title: string
+        dataType: string
+        min?: number
         getter: Function
         setter: Function
     }[] = []
     export let data: Object[] = []
-    export let columnInputTypes: string[] = []
 
     export let copyMapper: Function = (values) => {
         // Concat all values into a single string separated by commas
-        return values.join(',')
+        return values.join(",")
     }
 
     function copy(event: Event, value: Function) {
@@ -35,7 +36,7 @@
         input.value = value.toString()
         setter(data[index], value)
 
-        dispatch('change', {
+        dispatch("change", {
             data: data,
         })
     }
@@ -45,7 +46,7 @@
     }
 
     function addRow(event: Event) {
-        data = [...data, new Process('New Process', 0, 0, 0)]
+        data = [...data, new Process("New Process", 0, 0, 0)]
     }
 </script>
 
@@ -55,7 +56,10 @@
             {#each columnsMapper as column}
                 {#if copyable}
                     <th>
-                        <button on:click={(e) => copy(e, column.getter)}>
+                        <button
+                            class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800"
+                            on:click={(e) => copy(e, column.getter)}
+                        >
                             {column.title}
                             <i class="fa-regular fa-clone" />
                         </button>
@@ -74,9 +78,10 @@
                 {#each columnsMapper as column, columnIndex}
                     <td>
                         {#if editable}
-                            {#if columnInputTypes[columnIndex] === 'number'}
+                            {#if column.dataType === "number"}
                                 <input
-                                    type={columnInputTypes[columnIndex]}
+                                    type={column.dataType}
+                                    min={column.min ?? "unset"}
                                     disabled={!editable}
                                     value={column.getter(item)}
                                     on:input={(e) =>
@@ -115,16 +120,24 @@
 </table>
 
 {#if editable}
-    <button id="add-row" on:click={(e) => addRow(e)}>
+    <button
+        id="add-row"
+        on:click={(e) => addRow(e)}
+    >
         <i class="fa-solid fa-plus" /> Add {entityName}</button
     >
 {/if}
 
-<style>
+<style
+    global
+    lang="postcss"
+>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
     #add-row {
         width: 100%;
     }
-
     table {
         width: 100%;
         table-layout: auto;

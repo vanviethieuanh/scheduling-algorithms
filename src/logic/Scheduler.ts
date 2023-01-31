@@ -1,9 +1,9 @@
-import type { Process } from '@models/Process'
+import type { Process } from "@models/Process"
 
 // Sortest job first (SJF)
 export function SJF(processes: Process[]): Process[] {
     // Clear all cache
-    processes.forEach(process => process.clearCache())
+    processes.forEach((process) => process.clearCache())
 
     // Get name order of processes
     const namesOrder = processes.map((p) => p.name)
