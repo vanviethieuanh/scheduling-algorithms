@@ -7,50 +7,51 @@
     $: processesName = [...new Set(runs.map((run) => run.periodName))]
 </script>
 
-<table>
+<div class="table">
     {#each processesName as name}
-        <tr>
-            <td>{name}</td>
-            <td>
-                <div
-                    class="bar"
-                    style={`--cols: ${cols}`}
-                >
-                    {#each runs as run}
-                        {#if run.periodName === name}
-                            <div
-                                class="grantt"
-                                style={`--start: ${
-                                    run.periodStart + 1
-                                };--end: ${run.periodEnd + 1}`}
-                            />
-                        {/if}
-                    {/each}
-                </div>
-            </td>
-        </tr>
+        <div class="row">
+            <div class="title">{name}</div>
+            <div
+                class="bar"
+                style={`--cols: ${cols}`}
+            >
+                {#each runs as run}
+                    {#if run.periodName === name}
+                        <div
+                            class="grantt"
+                            style={`
+                                --start: ${run.periodStart + 1};
+                                --end: ${run.periodEnd + 1}
+                            `}
+                        />
+                    {/if}
+                {/each}
+            </div>
+        </div>
     {/each}
-</table>
+</div>
 
-<style>
-    td:first-child {
-        padding-right: min(1rem, 20px);
+<style lang="postcss">
+    .row {
+        display: grid;
+        grid-template-columns: auto 1fr;
     }
 
-    td:last-child {
-        background-color: #efefef;
+    .title {
+        padding-right: 1rem;
     }
 
     .bar {
         display: grid;
         gap: 1px;
-        grid-template-columns: repeat(var(--cols), 20px);
+        grid-template-columns: repeat(var(--cols), 1fr);
         height: 100%;
     }
 
     .grantt {
         background-color: #222222;
         height: 20px;
+        border-radius: 3px;
         grid-column: var(--start) / var(--end);
     }
 </style>

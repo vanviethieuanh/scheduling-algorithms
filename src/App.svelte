@@ -36,6 +36,7 @@
                 process.arrivalTime = value
             },
             min: 1,
+            editable: true,
         },
         {
             title: "Burst Time",
@@ -45,6 +46,7 @@
                 process.burstTime = value
             },
             min: 1,
+            editable: true,
         },
         {
             title: "Priority",
@@ -53,17 +55,7 @@
             setter: (process, value) => {
                 process.priority = value
             },
-        },
-    ]
-
-    const resultColumnsMapper = [
-        {
-            title: "Name",
-            dataType: "text",
-            getter: (v) => v.name,
-            setter: (obj, value) => {
-                throw "Not Implemented"
-            },
+            editable: true,
         },
         {
             title: "Finish Time",
@@ -72,6 +64,7 @@
             setter: (obj, value) => {
                 throw "Not Implemented"
             },
+            copyable: true,
         },
         {
             title: "Wait Time",
@@ -80,6 +73,7 @@
             setter: (obj, value) => {
                 throw "Not Implemented"
             },
+            copyable: true,
         },
         {
             title: "Turnaround Time",
@@ -88,6 +82,7 @@
             setter: (obj, value) => {
                 throw "Not Implemented"
             },
+            copyable: true,
         },
         {
             title: "Response Time",
@@ -96,6 +91,7 @@
             setter: (obj, value) => {
                 throw "Not Implemented"
             },
+            copyable: true,
         },
     ]
 
@@ -120,21 +116,10 @@
     <div class="grid-displayer">
         <div class="table-container">
             <Table
-                bind:data={inputProcesses}
+                bind:data={result}
                 columnsMapper={inputColumnsMapper}
-                editable={true}
-                copyable={false}
                 entityName="process"
                 on:change={updateInput}
-            />
-        </div>
-
-        <div class="result-container">
-            <Table
-                columnsMapper={resultColumnsMapper}
-                data={result}
-                editable={false}
-                copyable={true}
             />
         </div>
     </div>
@@ -172,7 +157,7 @@
 
     .grid-displayer {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
     @media (min-width: 640px) {

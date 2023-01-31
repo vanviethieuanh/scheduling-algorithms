@@ -2,19 +2,22 @@
     import { Process } from "@models/Process"
     import { createEventDispatcher } from "svelte"
 
-    const dispatch = createEventDispatcher()
-
-    export let entityName: string = "Row"
-    export let editable: boolean = false
-    export let copyable: boolean = false
-
-    export let columnsMapper: {
+    type ColumnMapper = {
         title: string
         dataType: string
         min?: number
+        editable?: boolean
+        copyable?: boolean
         getter: Function
         setter: Function
-    }[] = []
+    }
+
+    const dispatch = createEventDispatcher()
+
+    export let entityName: string = "Row"
+
+    export let columnsMapper: ColumnMapper[] = []
+
     export let data: Object[] = []
 
     export let copyMapper: Function = (values) => {
@@ -54,7 +57,7 @@
     <thead>
         <tr>
             {#each columnsMapper as column}
-                {#if copyable}
+                {#if column.copyable}
                     <th>
                         <button
                             class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800"
@@ -77,12 +80,12 @@
             <tr>
                 {#each columnsMapper as column, columnIndex}
                     <td>
-                        {#if editable}
+                        {#if column.editable}
                             {#if column.dataType === "number"}
                                 <input
                                     type={column.dataType}
                                     min={column.min ?? "unset"}
-                                    disabled={!editable}
+                                    disabled={!column.editable}
                                     value={column.getter(item)}
                                     on:input={(e) =>
                                         numberPostHandler(
@@ -104,29 +107,25 @@
                 {/each}
 
                 <!-- Delete button in the end of each line if Editable -->
-                {#if editable}
-                    <td>
-                        <button
-                            name="delete"
-                            on:click={(e) => deleteRow(e, rowIndex)}
-                        >
-                            <i class="fa-solid fa-minus" />
-                        </button>
-                    </td>
-                {/if}
+                <td>
+                    <button
+                        name="delete"
+                        on:click={(e) => deleteRow(e, rowIndex)}
+                    >
+                        <i class="fa-solid fa-minus" />
+                    </button>
+                </td>
             </tr>
         {/each}
     </tbody>
 </table>
 
-{#if editable}
-    <button
-        id="add-row"
-        on:click={(e) => addRow(e)}
-    >
-        <i class="fa-solid fa-plus" /> Add {entityName}</button
-    >
-{/if}
+<button
+    id="add-row"
+    on:click={(e) => addRow(e)}
+>
+    <i class="fa-solid fa-plus" /> Add {entityName}</button
+>
 
 <style
     global
@@ -135,6 +134,7 @@
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
+
     #add-row {
         width: 100%;
     }
