@@ -1,0 +1,91 @@
+<script lang="ts">
+    import { SortestJobFirst } from "@logic/Scheduler"
+
+    const Algorithms: {
+        name: string
+        shorthand?: string
+        scheduler: Function
+    }[] = [
+        {
+            name: "Shortest Job First ",
+            shorthand: "SJF",
+            scheduler: SortestJobFirst,
+        },
+        {
+            name: "First-Come, First-Served ",
+            shorthand: "FCFS",
+            scheduler: () => {},
+        },
+        {
+            name: "Shortest Remaining Time First ",
+            shorthand: "SRTF",
+            scheduler: () => {},
+        },
+        { name: "Priority Scheduling", scheduler: () => {} },
+        { name: "Round-Robin ", shorthand: "RR", scheduler: () => {} },
+        {
+            name: "Highest Response Ratio Next ",
+            shorthand: "HRRN",
+            scheduler: () => {},
+        },
+        { name: "Multilevel Queue", scheduler: () => {} },
+        { name: "Multilevel Feedback Queue", scheduler: () => {} },
+    ]
+    export let selectedIndex: number = 0
+    export let selectedScheduler: Function = Algorithms[selectedIndex].scheduler
+</script>
+
+<div class="algo">
+    <ul>
+        {#each Algorithms as algorithm, index}
+            <li>
+                <button
+                    class={selectedIndex === index ? "item selected" : "item"}
+                    on:click={(e) => (selectedIndex = index)}
+                >
+                    {#if algorithm.shorthand}
+                        <b>{algorithm.shorthand}</b> -
+                    {/if}
+                    {algorithm.name}
+                </button>
+            </li>
+        {/each}
+    </ul>
+</div>
+
+<style lang="scss">
+    ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 0.3rem;
+    }
+    b {
+        font-weight: 700;
+    }
+    .item {
+        width: 100%;
+        height: 100%;
+
+        padding: 0.5rem 1rem;
+        color: white;
+
+        background-color: rgba($color: #fff, $alpha: 0.1);
+        border: rgba($color: #fff, $alpha: 0.1) 1px solid;
+
+        &.selected {
+            color: #222;
+
+            background-color: rgba($color: #fff, $alpha: 0.8);
+            border: rgba($color: #fff, $alpha: 0.5) 1px solid;
+
+            &:hover {
+                background-color: rgba($color: #fff, $alpha: 0.8);
+                border: rgba($color: #fff, $alpha: 0.5) 1px solid;
+            }
+        }
+        &:hover {
+            background-color: rgba($color: #fff, $alpha: 0.2);
+            border: rgba($color: #fff, $alpha: 0.5) 1px solid;
+        }
+    }
+</style>

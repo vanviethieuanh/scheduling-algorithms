@@ -95,7 +95,7 @@
     ]
 
     // Clone MockProcesses to pass to SJF
-    $: result = Scheduler.SJF(inputProcesses.slice())
+    $: result = Scheduler.SortestJobFirst(inputProcesses.slice())
 
     $: averageWaitTime =
         result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
@@ -138,12 +138,12 @@
         margin: 0;
 
         backdrop-filter: blur(50px);
-        background-color: rgba(0, 0, 50, 0.2);
+        background-color: rgba(0, 0, 50, 0.5);
         height: 100%;
     }
 
     .component {
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.7);
         padding: 1rem;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
@@ -151,12 +151,13 @@
     }
 
     .container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
         padding: 3rem 2rem;
         max-width: 1400px;
         margin: 0 auto;
-    }
-    .table {
-        margin-top: 50px;
     }
 
     @media (min-width: 640px) {

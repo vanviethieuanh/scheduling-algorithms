@@ -1,7 +1,7 @@
 import type { Process } from "@models/Process"
 
 // Sortest job first (SJF)
-export function SJF(processes: Process[]): Process[] {
+export function SortestJobFirst(processes: Process[]): Process[] {
     // Clear all cache
     processes.forEach((process) => process.clearCache())
 
@@ -54,3 +54,24 @@ export function SJF(processes: Process[]): Process[] {
     })
     return finishedProcesses
 }
+
+// First-Come, First-Served
+export function FirstComeFirstServed(processes: Process[]): Process[] {return processes}
+
+// Shortest Remaining Time First
+export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {return processes}
+
+// Priority Scheduling
+export function PriorityScheduling(processes: Process[]): Process[] {return processes}
+
+// Round Robin
+export function RoundRobin(processes: Process[], quantumTime: number): Process[] {return processes}
+
+// Highest Response Ratio Next
+export function HighestResponseRatioNext(processes: Process[]): Process[] {return processes}
+
+// Multilevel Queue
+export function MultilevelQueue(processes: Process[]): Process[] {return processes}
+
+// Multilevel Feedback Queue
+export function MultilevelFeedbackQueue(processes: Process[]): Process[] {return processes}
