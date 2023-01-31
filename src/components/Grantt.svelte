@@ -73,13 +73,6 @@
         grid-row: var(--rows);
     }
 
-    .bar {
-        display: grid;
-        gap: 1px;
-        grid-template-columns: repeat(var(--cols), 1fr);
-        height: 100%;
-    }
-
     .grantt {
         background-color: var(--color);
         box-shadow: 0 0 20px var(--shadow-color);

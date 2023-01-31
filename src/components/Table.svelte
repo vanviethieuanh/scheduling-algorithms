@@ -41,6 +41,18 @@
         })
     }
 
+    function textPostHandler(event: Event, setter: Function, index: number) {
+        const input = event.target as HTMLInputElement
+        const value = input.value.slice(0, 10)
+
+        input.value = value
+        setter(data[index], value)
+
+        dispatch("change", {
+            data: data,
+        })
+    }
+
     function deleteRow(event: Event, index: number) {
         data = data.filter((_, i) => i !== index)
     }
@@ -106,6 +118,12 @@
                                     <input
                                         type="text"
                                         value={column.getter(item)}
+                                        on:input={(e) =>
+                                            textPostHandler(
+                                                e,
+                                                column.setter,
+                                                rowIndex
+                                            )}
                                     />
                                 {/if}
                             {:else}
