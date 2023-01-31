@@ -15,6 +15,7 @@
     }
 
     const dispatch = createEventDispatcher()
+    let nameIndex = 0
 
     export let columnsMapper: ColumnMapper[] = []
     export let data: Object[] = []
@@ -45,7 +46,8 @@
     }
 
     function addRow(event: Event) {
-        data = [...data, new Process("New Process", 0, 0, 0)]
+        data = [...data, new Process(`New Process ${nameIndex}`, 0, 1, 0)]
+        nameIndex += 1
     }
 </script>
 
@@ -118,7 +120,7 @@
                             name="delete"
                             on:click={(e) => deleteRow(e, rowIndex)}
                         >
-                            <i class="fa-solid fa-minus" />
+                            <i class="fa-solid fa-trash-can" />
                         </button>
                     </td>
                 </tr>
@@ -128,18 +130,10 @@
 </div>
 
 <style lang="scss">
-    .component {
-        background-color: rgba(255, 255, 255, 0.3);
-        padding: 1rem;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
-        user-select: none;
-    }
     #add-row {
         margin: 0 1rem;
         font-size: 1rem;
 
-        border: rgba($color: #fff, $alpha: 0) 1px solid;
         background-color: rgba($color: #fff, $alpha: 0.2);
         border: rgba($color: #fff, $alpha: 0.2) 1px solid;
     }

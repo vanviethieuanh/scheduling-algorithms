@@ -118,7 +118,7 @@
         <Grantt {runs} />
         <div class="table">
             <Table
-                bind:data={result}
+                bind:data={inputProcesses}
                 columnsMapper={inputColumnsMapper}
                 on:change={updateInput}
             />
@@ -126,7 +126,10 @@
     </div>
 </main>
 
-<style>
+<style
+    global
+    lang="scss"
+>
     @import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
 
     main {
@@ -137,8 +140,16 @@
         max-width: 240px;
 
         backdrop-filter: blur(50px);
-        background-color: rgba(240, 240, 255, 0.6);
+        background-color: rgba(0, 0, 50, 0.2);
         height: 100%;
+    }
+
+    .component {
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
+        user-select: none;
     }
 
     .container {
