@@ -1,9 +1,14 @@
 import type { Process } from "@models/Process"
 
+function ClearProcessesCache(processes: Process[]): void {
+    // Clear all cache
+    processes.forEach((process) => process.clearCache())
+}
+
 // Sortest job first (SJF)
 export function SortestJobFirst(processes: Process[]): Process[] {
     // Clear all cache
-    processes.forEach((process) => process.clearCache())
+    ClearProcessesCache(processes)
 
     // Get name order of processes
     const namesOrder = processes.map((p) => p.name)
@@ -56,22 +61,53 @@ export function SortestJobFirst(processes: Process[]): Process[] {
 }
 
 // First-Come, First-Served
-export function FirstComeFirstServed(processes: Process[]): Process[] {return processes}
+export function FirstComeFirstServed(processes: Process[]): Process[] {
+    // Clear all cache
+    ClearProcessesCache(processes)
+
+    // Sort processes by arrival time
+    processes.sort((a, b) => {
+        return a.arrivalTime - b.arrivalTime
+    })
+
+    let time = 0
+    processes.forEach((process) => {
+        process.execute(process.burstTime, time)
+        time += process.burstTime
+    })
+
+    return processes
+}
 
 // Shortest Remaining Time First
-export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {return processes}
+export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {
+    return processes
+}
 
 // Priority Scheduling
-export function PriorityScheduling(processes: Process[]): Process[] {return processes}
+export function PriorityScheduling(processes: Process[]): Process[] {
+    return processes
+}
 
 // Round Robin
-export function RoundRobin(processes: Process[], quantumTime: number): Process[] {return processes}
+export function RoundRobin(
+    processes: Process[],
+    quantumTime: number
+): Process[] {
+    return processes
+}
 
 // Highest Response Ratio Next
-export function HighestResponseRatioNext(processes: Process[]): Process[] {return processes}
+export function HighestResponseRatioNext(processes: Process[]): Process[] {
+    return processes
+}
 
 // Multilevel Queue
-export function MultilevelQueue(processes: Process[]): Process[] {return processes}
+export function MultilevelQueue(processes: Process[]): Process[] {
+    return processes
+}
 
 // Multilevel Feedback Queue
-export function MultilevelFeedbackQueue(processes: Process[]): Process[] {return processes}
+export function MultilevelFeedbackQueue(processes: Process[]): Process[] {
+    return processes
+}
