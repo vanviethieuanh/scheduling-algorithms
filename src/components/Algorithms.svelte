@@ -1,5 +1,14 @@
 <script lang="ts">
-    import { SortestJobFirst } from "@logic/Scheduler"
+    import {
+        SortestJobFirst,
+        FirstComeFirstServed,
+        ShortestRemainingTimeFirst,
+        PriorityScheduling,
+        RoundRobin,
+        HighestResponseRatioNext,
+        MultilevelQueue,
+        MultilevelFeedbackQueue,
+    } from "@logic/Scheduler"
 
     const Algorithms: {
         name: string
@@ -14,25 +23,30 @@
         {
             name: "First-Come, First-Served ",
             shorthand: "FCFS",
-            scheduler: () => {},
+            scheduler: FirstComeFirstServed,
         },
         {
             name: "Shortest Remaining Time First ",
             shorthand: "SRTF",
-            scheduler: () => {},
+            scheduler: ShortestRemainingTimeFirst,
         },
-        { name: "Priority Scheduling", scheduler: () => {} },
-        { name: "Round-Robin ", shorthand: "RR", scheduler: () => {} },
+        { name: "Priority Scheduling", scheduler: PriorityScheduling },
+        { name: "Round-Robin ", shorthand: "RR", scheduler: RoundRobin },
         {
             name: "Highest Response Ratio Next ",
             shorthand: "HRRN",
-            scheduler: () => {},
+            scheduler: HighestResponseRatioNext,
         },
-        { name: "Multilevel Queue", scheduler: () => {} },
-        { name: "Multilevel Feedback Queue", scheduler: () => {} },
+        { name: "Multilevel Queue", scheduler: MultilevelQueue },
+        {
+            name: "Multilevel Feedback Queue",
+            scheduler: MultilevelFeedbackQueue,
+        },
     ]
+
     export let selectedIndex: number = 0
-    export let selectedScheduler: Function = Algorithms[selectedIndex].scheduler
+    export const selectedScheduler: Function =
+        Algorithms[selectedIndex].scheduler
 </script>
 
 <div class="algo">
