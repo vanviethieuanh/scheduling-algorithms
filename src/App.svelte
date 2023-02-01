@@ -94,8 +94,10 @@
         },
     ]
 
+    let scheduler: Function = Scheduler.SortestJobFirst
+
     // Clone MockProcesses to pass to SJF
-    $: result = Scheduler.SortestJobFirst(inputProcesses.slice())
+    $: result = scheduler(inputProcesses.slice())
 
     $: averageWaitTime =
         result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
@@ -114,7 +116,11 @@
 <main>
     <div class="container">
         <Grantt {runs} />
-        <Algorithms />
+        <Algorithms
+            on:change={({ detail: algo }) => {
+                scheduler = algo
+            }}
+        />
         <div class="table">
             <Table
                 bind:data={inputProcesses}

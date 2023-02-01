@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte"
+
     import {
         SortestJobFirst,
         FirstComeFirstServed,
@@ -44,9 +46,8 @@
         },
     ]
 
-    export let selectedIndex: number = 0
-    export const selectedScheduler: Function =
-        Algorithms[selectedIndex].scheduler
+    let selectedIndex: number = 0
+    const dispatch = createEventDispatcher()
 </script>
 
 <div class="algo">
@@ -55,7 +56,10 @@
             <li>
                 <button
                     class={selectedIndex === index ? "item selected" : "item"}
-                    on:click={(e) => (selectedIndex = index)}
+                    on:click={(e) => {
+                        selectedIndex = index
+                        dispatch("change", Algorithms[selectedIndex].scheduler)
+                    }}
                 >
                     {#if algorithm.shorthand}
                         <b>{algorithm.shorthand}</b> -
