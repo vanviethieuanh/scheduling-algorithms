@@ -43,7 +43,9 @@
                                 --color: ${getColor(index)};
                                 --shadow-color: ${`${getColor(index)}4f`};
                             `}
-                    />
+                    >
+                        {run.periodName}
+                    </div>
                 {/if}
             {/each}
         {/each}

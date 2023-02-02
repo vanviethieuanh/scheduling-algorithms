@@ -6,6 +6,8 @@
     <div class="settings">
         <div>Quantum Time</div>
         <input
+            type="number"
+            min="1"
             id="quantumn-time"
             bind:value={quantumnTime}
         />
