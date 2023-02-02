@@ -7,7 +7,14 @@ function ClearProcessesCache(processes: Process[]): void {
 }
 
 // Sortest job first (SJF) ** Non-Preemptive
-export function NonPreemptive_SortestJobFirst(processes: Process[]): Process[] {
+/**
+ * @param processes
+ * @returns
+ * @description
+ * Shortest job next (SJN), also known as shortest job first (SJF) or shortest process next (SPN), is a scheduling policy that selects for execution the waiting process with the smallest execution time.[1] SJN is a non-preemptive algorithm. Shortest remaining time is a preemptive variant of SJN.
+ * https://en.wikipedia.org/wiki/Shortest_job_next
+ * */
+export function SortestJobFirst(processes: Process[]): Process[] {
     // Clear all cache
     ClearProcessesCache(processes)
 
@@ -61,8 +68,15 @@ export function NonPreemptive_SortestJobFirst(processes: Process[]): Process[] {
     return finishedProcesses
 }
 
-// Sortest job first (SJF) ** Preemptive
-export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
+// ShortestRemainingTimeFirst (SRTF) ** Preemptive version of shortest job next scheduling algorithm.
+/**
+ * @param processes
+ * @returns
+ * @description
+ Shortest remaining time, also known as shortest remaining time first (SRTF), is a scheduling method that is a preemptive version of shortest job next scheduling. In this scheduling algorithm, the process with the smallest amount of time remaining until completion is selected to execute. Since the currently executing process is the one with the shortest amount of time remaining by definition, and since that time should only reduce as execution progresses, the process will either run until it completes or get preempted if a new process is added that requires a smaller amount of time. 
+ (https://en.wikipedia.org/wiki/Shortest_remaining_time)
+ **/
+export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {
     // Clear all cache
     ClearProcessesCache(processes)
 
@@ -128,8 +142,6 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
         })
     }
 
-    console.log(finishedProcesses)
-
     // Order finished processes by nameOrder
     finishedProcesses.sort((a, b) => {
         return namesOrder.indexOf(a.name) - namesOrder.indexOf(b.name)
@@ -138,6 +150,10 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
 }
 
 // First-Come, First-Served
+/**
+ * @param processes
+ * @returns
+ **/
 export function FirstComeFirstServed(processes: Process[]): Process[] {
     // Clear all cache
     ClearProcessesCache(processes)
@@ -152,14 +168,6 @@ export function FirstComeFirstServed(processes: Process[]): Process[] {
         process.execute(process.burstTime, time)
         time += process.burstTime
     })
-
-    return processes
-}
-
-// Shortest Remaining Time First
-export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {
-    // Clear all cache
-    ClearProcessesCache(processes)
 
     return processes
 }
