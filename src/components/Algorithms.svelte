@@ -74,21 +74,20 @@
     </ul>
     <div class="divider" />
     <div class="settings">
+        <div>Quantum Time</div>
         <input
             id="quantumn-time"
-            placeholder="Quantum Time"
             bind:value={quantumnTime}
         />
-        <div class="switch-button">
-            <label class="switch">
-                <input
-                    type="checkbox"
-                    bind:checked={isPreemptive}
-                />
-                <span class="slider round" />
-            </label>
-            <div>Preemptive</div>
-        </div>
+        <div>Preemptive</div>
+
+        <label class="switch">
+            <input
+                type="checkbox"
+                bind:checked={isPreemptive}
+            />
+            <span class="slider round" />
+        </label>
     </div>
 </div>
 
@@ -147,14 +146,29 @@
     }
 
     .settings {
-        display: flex;
-        flex-direction: column;
+        height: fit-content;
+
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: 1fr 1fr;
+        gap: 0.5rem;
+
+        align-items: center;
+        justify-content: left;
+
+        color: white;
+
+        * {
+            text-align: left;
+        }
 
         #quantumn-time {
-            width: 100%;
+            max-width: 50px;
 
-            padding: 0.5rem 1rem;
+            padding: 0.5rem;
             color: white;
+
+            margin: 0;
 
             background-color: rgba($color: #fff, $alpha: 0.1);
             border: rgba($color: #fff, $alpha: 0.1) 1px solid;
