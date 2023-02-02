@@ -7,13 +7,14 @@
     // Logics
     import { Process } from "@models/Process"
     import * as Scheduler from "@logic/Scheduler"
+    import Metrics from "@components/Metrics.svelte"
 
     let inputProcesses = [
-        new Process("P-1", 0, 12, 1),
-        new Process("P-2", 2, 7, 2),
-        new Process("P-3", 5, 8, 3),
+        new Process("P-1", 0, 12, 2),
+        new Process("P-2", 2, 7, 1),
+        new Process("P-3", 5, 8, 5),
         new Process("P-4", 9, 3, 4),
-        new Process("P-5", 12, 6, null),
+        new Process("P-5", 12, 6, 3),
     ]
 
     // define column configs
@@ -34,7 +35,7 @@
             setter: (process, value) => {
                 process.arrivalTime = value
             },
-            min: 1,
+            min: 0,
             editable: true,
         },
         {
@@ -95,9 +96,10 @@
     ]
 
     let scheduler: Function = Scheduler.SortestJobFirst
+    let quantumnTime = 2
 
     // Clone MockProcesses to pass to SJF
-    $: result = scheduler(inputProcesses.slice())
+    $: result = scheduler(inputProcesses.slice(), { quantumn: 2 })
 
     $: averageWaitTime =
         result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
@@ -116,11 +118,15 @@
 <main>
     <div class="container">
         <Grantt {runs} />
-        <Algorithms
-            on:change={({ detail: algo }) => {
-                scheduler = algo
-            }}
-        />
+        <div class="options">
+            <Algorithms
+                on:change={({ detail: algo }) => {
+                    scheduler = algo
+                }}
+            />
+            <div class="divider" />
+            <Metrics bind:quantumnTime />
+        </div>
         <div class="table">
             <Table
                 bind:data={inputProcesses}
@@ -146,6 +152,24 @@
         backdrop-filter: blur(50px);
         background-color: rgba(0, 0, 50, 0.5);
         height: 100%;
+    }
+
+    .options {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 1rem;
+    }
+
+    .divider {
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 20%,
+            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.1) 80%,
+            rgba(255, 255, 255, 0) 100%
+        );
     }
 
     .component {
