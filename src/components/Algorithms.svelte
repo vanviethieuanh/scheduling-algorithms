@@ -2,7 +2,8 @@
     import { createEventDispatcher } from "svelte"
 
     import {
-        SortestJobFirst,
+        NonPreemptive_SortestJobFirst,
+        Preemptive_SortestJobFirst,
         FirstComeFirstServed,
         ShortestRemainingTimeFirst,
         PriorityScheduling,
@@ -18,9 +19,14 @@
         scheduler: Function
     }[] = [
         {
-            name: "Shortest Job First ",
+            name: "Shortest Job First (Non-Preemptive)",
             shorthand: "SJF",
-            scheduler: SortestJobFirst,
+            scheduler: NonPreemptive_SortestJobFirst,
+        },
+        {
+            name: "Shortest Job First (Preemptive)",
+            shorthand: "SJF",
+            scheduler: Preemptive_SortestJobFirst,
         },
         {
             name: "First-Come, First-Served ",

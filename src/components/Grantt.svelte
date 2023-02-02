@@ -104,6 +104,13 @@
 
         display: grid;
         place-content: center;
+
+        animation-duration: 1s;
+        animation-name: expand;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
     }
     .time {
         height: fit-content;
@@ -136,6 +143,14 @@
                 rgba(0, 0, 0, 0.1) 92%,
                 rgba(0, 0, 0, 0) 100%
             );
+        }
+    }
+    @keyframes expand {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
         }
     }
 </style>

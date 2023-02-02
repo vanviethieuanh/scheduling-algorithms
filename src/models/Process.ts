@@ -31,6 +31,9 @@ export class Process {
     }
 
     private _remainingTime: number
+    public get remainingTime() {
+        return this._remainingTime
+    }
     private _executionPeriods: [number, number][] = []
 
     constructor(name, arrivalTime, burstTime, priority) {
@@ -44,6 +47,8 @@ export class Process {
     }
 
     execute(time, currentTime) {
+        console.log(this)
+
         this._remainingTime -= time
         this._executionPeriods.push([currentTime, currentTime + time])
 
@@ -56,6 +61,7 @@ export class Process {
                 this._finishedTime - this.arrivalTime - this.burstTime
             this._turnaroundTime = this._finishedTime - this.arrivalTime
         }
+        console.log(this)
     }
 
     toGranttPeriods(): GranttPeriod[] {
@@ -66,5 +72,10 @@ export class Process {
 
     clearCache(): void {
         this._executionPeriods = []
+    }
+    reset(): void {
+        this._remainingTime = this.burstTime
+        this._waitTime = 0
+        this._turnaroundTime = 0
     }
 }

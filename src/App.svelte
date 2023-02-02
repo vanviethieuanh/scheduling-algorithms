@@ -94,7 +94,7 @@
         },
     ]
 
-    let scheduler: Function = Scheduler.SortestJobFirst
+    let scheduler: Function = Scheduler.NonPreemptive_SortestJobFirst
 
     // Clone MockProcesses to pass to SJF
     $: result = scheduler(inputProcesses.slice())

@@ -3,10 +3,11 @@ import type { Process } from "@models/Process"
 function ClearProcessesCache(processes: Process[]): void {
     // Clear all cache
     processes.forEach((process) => process.clearCache())
+    processes.forEach((process) => process.reset())
 }
 
-// Sortest job first (SJF)
-export function SortestJobFirst(processes: Process[]): Process[] {
+// Sortest job first (SJF) ** Non-Preemptive
+export function NonPreemptive_SortestJobFirst(processes: Process[]): Process[] {
     // Clear all cache
     ClearProcessesCache(processes)
 
@@ -60,6 +61,76 @@ export function SortestJobFirst(processes: Process[]): Process[] {
     return finishedProcesses
 }
 
+// Sortest job first (SJF) ** Preemptive
+export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
+    // Clear all cache
+    ClearProcessesCache(processes)
+
+    // Get name order of processes
+    const namesOrder = processes.map((p) => p.name)
+
+    // Sort processes by arrival time
+    processes.sort((a, b) => {
+        return a.arrivalTime - b.arrivalTime
+    })
+    let sumOfBurstTimes = processes.reduce((a, b) => {
+        return a + b.burstTime
+    }, 0)
+
+    // Execute processes
+    let time = processes[0].arrivalTime
+    let finishedProcesses = []
+    let arrivedProcessesAtCurrentTime: Process[] = []
+
+    // Add first process to arrived processes
+    arrivedProcessesAtCurrentTime.push(processes.shift())
+
+    console.log(processes)
+
+    // log
+    console.log(arrivedProcessesAtCurrentTime)
+
+    while (time < sumOfBurstTimes) {
+        // get first process in arrived processes list
+        let firstProcess = arrivedProcessesAtCurrentTime[0]
+
+        // get time from now to next process arrival time
+        let nextProcessArrivalTime = processes[0]?.arrivalTime ?? Infinity
+        let timeToNextProcessArrivalTime = nextProcessArrivalTime - time
+
+        // execute process for the minimum time between burst time and time to next process arrival time
+        let timeToExecute = Math.min(
+            firstProcess.burstTime,
+            timeToNextProcessArrivalTime
+        )
+        // log
+        console.log(time, timeToExecute, timeToNextProcessArrivalTime)
+        firstProcess.execute(timeToExecute, time)
+        time += timeToExecute
+
+        // add all arrived processes to arrived processes list
+        if (processes.length > 0) {
+            let arrivedProcesses = processes.filter((process) => {
+                return process.arrivalTime <= time
+            })
+            arrivedProcessesAtCurrentTime =
+                arrivedProcessesAtCurrentTime.concat(arrivedProcesses)
+            processes = processes.filter((process) => {
+                return process.arrivalTime > time
+            })
+        }
+
+        console.log(arrivedProcessesAtCurrentTime.length)
+    }
+    console.log(finishedProcesses.length)
+
+    // Order finished processes by nameOrder
+    finishedProcesses.sort((a, b) => {
+        return namesOrder.indexOf(a.name) - namesOrder.indexOf(b.name)
+    })
+    return finishedProcesses
+}
+
 // First-Come, First-Served
 export function FirstComeFirstServed(processes: Process[]): Process[] {
     // Clear all cache
@@ -81,6 +152,9 @@ export function FirstComeFirstServed(processes: Process[]): Process[] {
 
 // Shortest Remaining Time First
 export function ShortestRemainingTimeFirst(processes: Process[]): Process[] {
+    // Clear all cache
+    ClearProcessesCache(processes)
+
     return processes
 }
 
