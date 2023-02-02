@@ -347,7 +347,68 @@ export function RoundRobin(
     options?: SchedulerOptions
 ): Process[] {
     const quantumnTime = options?.quantumnTime ?? 1
-    return processes
+    console.log(quantumnTime)
+
+    // Clear all cache
+    ClearProcessesCache(processes)
+
+    // Get name order of processes
+    const namesOrder = processes.map((p) => p.name)
+
+    // Sort processes by arrival time
+    processes.sort((a, b) => {
+        return a.arrivalTime - b.arrivalTime
+    })
+
+    // Execute processes
+    let time = processes[0].arrivalTime
+    let finishedProcesses = []
+    let arrivedProcessesAtCurrentTime: Process[] = []
+
+    // Add first process to arrived processes
+    arrivedProcessesAtCurrentTime.push(processes.shift())
+
+    while (processes.length > 0 || arrivedProcessesAtCurrentTime.length > 0) {
+        // get first process in arrived processes list
+        let firstProcess = arrivedProcessesAtCurrentTime.shift()
+
+        // execute process for the minimum time between burst time and time to next process arrival time
+        let timeToExecute = Math.min(firstProcess.remainingTime, quantumnTime)
+
+        firstProcess.execute(timeToExecute, time)
+        time += timeToExecute
+
+        // add all arrived processes to arrived processes list
+        if (processes.length > 0) {
+            let arrivedProcesses = processes.filter((process) => {
+                return process.arrivalTime <= time
+            })
+            arrivedProcessesAtCurrentTime =
+                arrivedProcessesAtCurrentTime.concat(arrivedProcesses)
+            processes = processes.filter((process) => {
+                return process.arrivalTime > time
+            })
+        }
+
+        arrivedProcessesAtCurrentTime.push(firstProcess)
+
+        // move all finished processes from arrived processes list to finished processes list
+        arrivedProcessesAtCurrentTime = arrivedProcessesAtCurrentTime.filter(
+            (process) => {
+                if (process.isDone) {
+                    finishedProcesses.push(process)
+                    return false
+                }
+                return true
+            }
+        )
+    }
+
+    // Order finished processes by nameOrder
+    finishedProcesses.sort((a, b) => {
+        return namesOrder.indexOf(a.name) - namesOrder.indexOf(b.name)
+    })
+    return finishedProcesses
 }
 
 // Highest Response Ratio Next

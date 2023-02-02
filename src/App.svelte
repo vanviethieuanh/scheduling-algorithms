@@ -99,7 +99,9 @@
     let quantumnTime = 2
 
     // Clone MockProcesses to pass to SJF
-    $: result = scheduler(inputProcesses.slice(), { quantumn: 2 })
+    $: result = scheduler(inputProcesses.slice(), {
+        quantumnTime: quantumnTime,
+    })
 
     $: averageWaitTime =
         result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
