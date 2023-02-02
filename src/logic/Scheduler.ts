@@ -73,9 +73,6 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
     processes.sort((a, b) => {
         return a.arrivalTime - b.arrivalTime
     })
-    let sumOfBurstTimes = processes.reduce((a, b) => {
-        return a + b.burstTime
-    }, 0)
 
     // Execute processes
     let time = processes[0].arrivalTime
@@ -85,12 +82,7 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
     // Add first process to arrived processes
     arrivedProcessesAtCurrentTime.push(processes.shift())
 
-    console.log(processes)
-
-    // log
-    console.log(arrivedProcessesAtCurrentTime)
-
-    while (time < sumOfBurstTimes) {
+    while (processes.length > 0 || arrivedProcessesAtCurrentTime.length > 0) {
         // get first process in arrived processes list
         let firstProcess = arrivedProcessesAtCurrentTime[0]
 
@@ -100,11 +92,10 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
 
         // execute process for the minimum time between burst time and time to next process arrival time
         let timeToExecute = Math.min(
-            firstProcess.burstTime,
+            firstProcess.remainingTime,
             timeToNextProcessArrivalTime
         )
-        // log
-        console.log(time, timeToExecute, timeToNextProcessArrivalTime)
+
         firstProcess.execute(timeToExecute, time)
         time += timeToExecute
 
@@ -120,9 +111,24 @@ export function Preemptive_SortestJobFirst(processes: Process[]): Process[] {
             })
         }
 
-        console.log(arrivedProcessesAtCurrentTime.length)
+        // move all finished processes from arrived processes list to finished processes list
+        arrivedProcessesAtCurrentTime = arrivedProcessesAtCurrentTime.filter(
+            (process) => {
+                if (process.isDone) {
+                    finishedProcesses.push(process)
+                    return false
+                }
+                return true
+            }
+        )
+
+        // sort arrived processes by remaining time
+        arrivedProcessesAtCurrentTime.sort((a, b) => {
+            return a.remainingTime - b.remainingTime
+        })
     }
-    console.log(finishedProcesses.length)
+
+    console.log(finishedProcesses)
 
     // Order finished processes by nameOrder
     finishedProcesses.sort((a, b) => {

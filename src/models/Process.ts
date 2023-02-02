@@ -34,6 +34,10 @@ export class Process {
     public get remainingTime() {
         return this._remainingTime
     }
+    public get isDone() {
+        return this._remainingTime <= 0
+    }
+
     private _executionPeriods: [number, number][] = []
 
     constructor(name, arrivalTime, burstTime, priority) {
@@ -47,10 +51,13 @@ export class Process {
     }
 
     execute(time, currentTime) {
-        console.log(this)
+        let lastExecutionPeriod =
+            this._executionPeriods[this._executionPeriods.length - 1]
 
         this._remainingTime -= time
-        this._executionPeriods.push([currentTime, currentTime + time])
+        if (!!lastExecutionPeriod && lastExecutionPeriod[1] === currentTime) {
+            lastExecutionPeriod[1] += time
+        } else this._executionPeriods.push([currentTime, currentTime + time])
 
         if (this._responseTime === null)
             this._responseTime = currentTime - this.arrivalTime
@@ -61,7 +68,6 @@ export class Process {
                 this._finishedTime - this.arrivalTime - this.burstTime
             this._turnaroundTime = this._finishedTime - this.arrivalTime
         }
-        console.log(this)
     }
 
     toGranttPeriods(): GranttPeriod[] {
@@ -77,5 +83,6 @@ export class Process {
         this._remainingTime = this.burstTime
         this._waitTime = 0
         this._turnaroundTime = 0
+        this._finishedTime = null
     }
 }

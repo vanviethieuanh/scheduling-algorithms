@@ -9,11 +9,11 @@
     import * as Scheduler from "@logic/Scheduler"
 
     let inputProcesses = [
-        new Process("P-1", 0, 5, 1),
-        new Process("P-2", 1, 4, 2),
-        new Process("P-3", 2, 3, 3),
-        new Process("P-4", 3, 2, 4),
-        new Process("P-5", 4, 1, null),
+        new Process("P-1", 0, 12, 1),
+        new Process("P-2", 2, 7, 2),
+        new Process("P-3", 5, 8, 3),
+        new Process("P-4", 9, 3, 4),
+        new Process("P-5", 12, 6, null),
     ]
 
     // define column configs
