@@ -18,10 +18,11 @@
     let nameIndex = 6
 
     export let columnsMapper: ColumnMapper[] = []
-    export let data: Object[] = []
+    export let processes: Object[] = []
+    export let calculatedProcesses: Object[]
 
     function copy(value: Function, copyMapper?: Function) {
-        const values = data.map((p) => value(p))
+        const values = processes.map((p) => value(p))
         const clipboard = copyMapper
             ? copyMapper(values)
             : DefaultCopyMapper(values)
@@ -34,10 +35,10 @@
         const value = Number(input.value)
 
         input.value = value.toString()
-        setter(data[index], value)
+        setter(processes[index], value)
 
         dispatch("change", {
-            data: data,
+            data: processes,
         })
     }
 
@@ -46,21 +47,21 @@
         const value = input.value.slice(0, 10)
 
         input.value = value
-        setter(data[index], value)
+        setter(processes[index], value)
 
         dispatch("change", {
-            data: data,
+            data: processes,
         })
     }
 
     function deleteRow(index: number) {
-        data = data.filter((_, i) => i !== index)
+        processes = processes.filter((_, i) => i !== index)
     }
 
     function addRow() {
-        if (data.length === 10) return
+        if (processes.length === 10) return
 
-        data = [...data, new Process(`P-${nameIndex}`, 0, 1, 0)]
+        processes = [...processes, new Process(`P-${nameIndex}`, 0, 1, 0)]
         nameIndex += 1
     }
 </script>
@@ -94,7 +95,7 @@
             </tr>
         </thead>
         <tbody>
-            {#each data as item, rowIndex}
+            {#each calculatedProcesses as item, rowIndex}
                 <tr>
                     {#each columnsMapper as column, columnIndex}
                         <td>
@@ -131,14 +132,16 @@
                     {/each}
 
                     <!-- Delete button in the end of each line. -->
-                    <td>
-                        <button
-                            name="delete"
-                            on:click={(e) => deleteRow(rowIndex)}
-                        >
-                            <i class="fa-solid fa-trash-can" />
-                        </button>
-                    </td>
+                    {#if processes.length > 1}
+                        <td>
+                            <button
+                                name="delete"
+                                on:click={(e) => deleteRow(rowIndex)}
+                            >
+                                <i class="fa-solid fa-trash-can" />
+                            </button>
+                        </td>
+                    {/if}
                 </tr>
             {/each}
         </tbody>

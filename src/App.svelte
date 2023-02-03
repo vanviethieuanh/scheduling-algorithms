@@ -131,7 +131,8 @@
         </div>
         <div class="table">
             <Table
-                bind:data={inputProcesses}
+                calculatedProcesses={result}
+                bind:processes={inputProcesses}
                 columnsMapper={inputColumnsMapper}
                 on:change={updateInput}
             />

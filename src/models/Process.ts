@@ -77,12 +77,15 @@ export class Process {
     }
 
     clearCache(): void {
+        console.log(this._responseTime)
         this._executionPeriods = []
     }
+
     reset(): void {
         this._remainingTime = this.burstTime
         this._waitTime = 0
         this._turnaroundTime = 0
         this._finishedTime = null
+        this._responseTime = null
     }
 }
