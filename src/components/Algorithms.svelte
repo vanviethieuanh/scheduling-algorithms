@@ -4,8 +4,6 @@
     import {
         FirstComeFirstServed,
         HighestResponseRatioNext,
-        MultilevelFeedbackQueue,
-        MultilevelQueue,
         NonPreemptivePriorityScheduling,
         PreemptivePriorityScheduling,
         RoundRobin,

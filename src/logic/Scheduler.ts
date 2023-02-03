@@ -482,19 +482,3 @@ export function HighestResponseRatioNext(
     })
     return finishedProcesses
 }
-
-// Multilevel Queue
-export function MultilevelQueue(
-    processes: Process[],
-    options?: SchedulerOptions
-): Process[] {
-    return processes
-}
-
-// Multilevel Feedback Queue
-export function MultilevelFeedbackQueue(
-    processes: Process[],
-    options?: SchedulerOptions
-): Process[] {
-    return processes
-}

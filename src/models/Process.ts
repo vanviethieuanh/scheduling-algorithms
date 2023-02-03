@@ -77,7 +77,6 @@ export class Process {
     }
 
     clearCache(): void {
-        console.log(this._responseTime)
         this._executionPeriods = []
     }
 
