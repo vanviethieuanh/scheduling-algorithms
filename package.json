@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run build:tailwind && rollup -c",
+    "build": "rollup -c",
     "start": "sirv public",
     "serve": "serve public -p 80",
     "pretty": "prettier --write \"./src/**/*.{ts,svelte,html}\"",
