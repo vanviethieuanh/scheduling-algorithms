@@ -5,9 +5,12 @@
 
     export let runs: GranttPeriod[] = []
 
-    $: cols = Math.max(...runs.map((run) => run.periodEnd))
     $: processesName = [...new Set(runs.map((run) => run.periodName))]
+    $: cols = Math.max(...runs.map((run) => run.periodEnd))
     $: rows = processesName.length
+
+    // Flat map of all periods
+    $: periodStamps = [0, ...runs.map((run) => run.periodEnd)]
 
     function getColor(index) {
         return Colors[index % Colors.length]
@@ -51,16 +54,16 @@
         {/each}
         {#each Array(cols) as _, index}
             <div
-                class="time"
+                class={periodStamps.includes(index) ? "time stamp" : "time"}
                 style={`
                 --cols: ${index + 2};
-            `}
+                `}
             >
                 {index}
             </div>
         {/each}
         <div
-            class="time last"
+            class="time last stamp"
             style={`
                 --cols: ${cols + 1};
             `}
@@ -125,6 +128,12 @@
 
         padding: 1rem 0;
 
+        opacity: 0.2;
+
+        &.stamp {
+            opacity: 1;
+        }
+
         &.last {
             margin-left: auto;
             transform: translateX(50%);
@@ -139,10 +148,9 @@
             height: 280px;
             background: linear-gradient(
                 rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 0.1) 8%,
+                rgba(0, 0, 0, 0.1) 10%,
                 rgba(0, 0, 0, 0.1) 50%,
-                rgba(0, 0, 0, 0.1) 92%,
-                rgba(0, 0, 0, 0.1) 92%,
+                rgba(0, 0, 0, 0.1) 90%,
                 rgba(0, 0, 0, 0) 100%
             );
         }

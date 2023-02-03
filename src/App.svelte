@@ -102,17 +102,9 @@
     let scheduler: Function = Scheduler.SortestJobFirst
     let quantumnTime: number = 4
 
-    // Clone MockProcesses to pass to SJF
     $: result = scheduler(inputProcesses.slice(), {
         quantumnTime: quantumnTime,
     })
-
-    $: averageWaitTime =
-        result.reduce((acc, v) => acc + v.waitTime, 0) / result.length
-    $: averageResponseTime =
-        result.reduce((acc, v) => acc + v.responseTime, 0) / result.length
-    $: averageTurnaroundTime =
-        result.reduce((acc, v) => acc + v.turnaroundTime, 0) / result.length
 
     $: runs = result.map((process) => process.toGranttPeriods()).flat()
 
