@@ -65,6 +65,7 @@
                 throw "Not Implemented"
             },
             copyable: true,
+            avg: true,
         },
         {
             title: "Wait Time",
@@ -74,6 +75,7 @@
                 throw "Not Implemented"
             },
             copyable: true,
+            avg: true,
         },
         {
             title: "Turnaround Time",
@@ -83,6 +85,7 @@
                 throw "Not Implemented"
             },
             copyable: true,
+            avg: true,
         },
         {
             title: "Response Time",
@@ -92,6 +95,7 @@
                 throw "Not Implemented"
             },
             copyable: true,
+            avg: true,
         },
     ]
 

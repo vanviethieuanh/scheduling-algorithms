@@ -88,7 +88,7 @@
         width: 100%;
         height: 100%;
 
-        padding: 0.5rem 1rem;
+        padding: 0.5rem;
         color: white;
 
         background-color: rgba($color: #fff, $alpha: 0.1);

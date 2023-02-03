@@ -12,6 +12,7 @@
         copyMapper?: Function
         getter: Function
         setter: Function
+        avg?: boolean
     }
 
     const dispatch = createEventDispatcher()
@@ -52,6 +53,14 @@
         dispatch("change", {
             data: processes,
         })
+    }
+
+    function average(processes, getter: Function) {
+        const sum = processes
+            .map((v) => getter(v))
+            .reduce((acc, v) => acc + v, 0)
+
+        return sum / processes.length
     }
 
     function deleteRow(index: number) {
@@ -144,11 +153,26 @@
                     {/if}
                 </tr>
             {/each}
+            <tr>
+                <td colspan={columnsMapper.filter((c) => c.avg).length}>
+                    Average
+                </td>
+                {#each columnsMapper as column}
+                    {#if column.avg}
+                        <td>
+                            {average(calculatedProcesses, column.getter)}
+                        </td>
+                    {/if}
+                {/each}
+            </tr>
         </tbody>
     </table>
 </div>
 
 <style lang="scss">
+    .component {
+        padding-bottom: 0;
+    }
     #add-row {
         margin: 0 1rem;
         font-size: 1rem;
@@ -191,6 +215,9 @@
         border-bottom: 1px solid rgba($color: #000030, $alpha: 0.1);
         &:last-child {
             border-bottom: none;
+            td {
+                padding: 1rem 0;
+            }
         }
     }
     input {
