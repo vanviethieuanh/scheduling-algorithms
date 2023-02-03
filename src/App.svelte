@@ -96,7 +96,7 @@
     ]
 
     let scheduler: Function = Scheduler.SortestJobFirst
-    let quantumnTime = 2
+    let quantumnTime: number = 4
 
     // Clone MockProcesses to pass to SJF
     $: result = scheduler(inputProcesses.slice(), {

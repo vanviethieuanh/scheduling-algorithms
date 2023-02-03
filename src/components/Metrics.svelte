@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let quantumnTime: number = 2
+    export let quantumnTime: number
 </script>
 
 <div>

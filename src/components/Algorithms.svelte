@@ -17,6 +17,7 @@
         name: string
         shorthand?: string
         scheduler: Function
+        disabled?: boolean
     }[] = [
         {
             name: "Shortest Job First",
@@ -47,11 +48,6 @@
             shorthand: "HRRN",
             scheduler: HighestResponseRatioNext,
         },
-        { name: "Multilevel Queue", scheduler: MultilevelQueue },
-        {
-            name: "Multilevel Feedback Queue",
-            scheduler: MultilevelFeedbackQueue,
-        },
     ]
 
     let selectedIndex: number = 0
@@ -64,6 +60,7 @@
         {#each Algorithms as algorithm, index}
             <li>
                 <button
+                    disabled={algorithm.disabled ?? false}
                     class={selectedIndex === index ? "item selected" : "item"}
                     on:click={(e) => {
                         selectedIndex = index
