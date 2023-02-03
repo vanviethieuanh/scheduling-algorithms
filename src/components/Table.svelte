@@ -22,13 +22,17 @@
     export let processes: Object[] = []
     export let calculatedProcesses: Object[]
 
-    function copy(value: Function, copyMapper?: Function) {
+    function copy(value: string) {
+        navigator.clipboard.writeText(value)
+    }
+
+    function copyRow(value: Function, copyMapper?: Function) {
         const values = processes.map((p) => value(p))
         const clipboard = copyMapper
             ? copyMapper(values)
             : DefaultCopyMapper(values)
 
-        navigator.clipboard.writeText(clipboard)
+        copy(clipboard)
     }
 
     function numberPostHandler(event: Event, setter: Function, index: number) {
@@ -87,7 +91,10 @@
                                 <button
                                     disabled={!column.copyable}
                                     on:click={(e) =>
-                                        copy(column.getter, column.copyMapper)}
+                                        copyRow(
+                                            column.getter,
+                                            column.copyMapper
+                                        )}
                                 >
                                     <i class="fa-solid fa-copy" />
                                 </button>
@@ -161,6 +168,18 @@
                     {#if column.avg}
                         <td>
                             {average(calculatedProcesses, column.getter)}
+                            <button
+                                disabled={!column.copyable}
+                                on:click={(e) =>
+                                    copy(
+                                        average(
+                                            calculatedProcesses,
+                                            column.getter
+                                        )
+                                    )}
+                            >
+                                <i class="fa-solid fa-copy" />
+                            </button>
                         </td>
                     {/if}
                 {/each}
@@ -217,6 +236,18 @@
             border-bottom: none;
             td {
                 padding: 1rem 0;
+            }
+        }
+    }
+    tbody {
+        tr {
+            &:hover {
+                background-color: rgba($color: #ffffff, $alpha: 0.3);
+            }
+        }
+        tr:last-child {
+            &:hover {
+                background-color: rgba($color: #ffffff, $alpha: 0);
             }
         }
     }

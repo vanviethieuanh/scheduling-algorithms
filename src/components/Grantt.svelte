@@ -80,7 +80,7 @@
 
     .table {
         height: 300px;
-        margin: 2rem 1rem;
+        margin: 0.5rem 2rem 2rem 2rem;
         display: grid;
         grid-template-columns: auto repeat(var(--cols), 1fr);
         grid-template-rows: auto repeat(var(--rows), 1fr);
