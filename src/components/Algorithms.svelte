@@ -23,12 +23,12 @@
             scheduler: SortestJobFirst,
         },
         {
-            name: "Shortest Remaining Time First ",
+            name: "Shortest Remaining Time First",
             shorthand: "SRTF",
             scheduler: ShortestRemainingTimeFirst,
         },
         {
-            name: "First-Come, First-Served ",
+            name: "First-Come, First-Served",
             shorthand: "FCFS",
             scheduler: FirstComeFirstServed,
         },
@@ -42,7 +42,7 @@
         },
         { name: "Round-Robin ", shorthand: "RR", scheduler: RoundRobin },
         {
-            name: "Highest Response Ratio Next ",
+            name: "Highest Response Ratio Next",
             shorthand: "HRRN",
             scheduler: HighestResponseRatioNext,
         },
