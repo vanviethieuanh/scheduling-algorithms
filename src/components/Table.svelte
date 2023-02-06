@@ -175,7 +175,7 @@
                                         average(
                                             calculatedProcesses,
                                             column.getter
-                                        )
+                                        ).toString()
                                     )}
                             >
                                 <i class="fa-solid fa-copy" />

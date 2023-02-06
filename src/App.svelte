@@ -8,6 +8,7 @@
     import { Process } from "@models/Process"
     import * as Scheduler from "@logic/Scheduler"
     import Metrics from "@components/Metrics.svelte"
+    import Donate from "@components/Donate.svelte"
 
     let inputProcesses = [
         new Process("P-1", 0, 12, 2),
@@ -133,6 +134,7 @@
                 on:change={updateInput}
             />
         </div>
+        <Donate />
     </div>
 </main>
 
@@ -174,6 +176,7 @@
     .component {
         background-color: rgba(255, 255, 255, 0.7);
         padding: 1rem;
+        padding-bottom: 0;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba($color: #000030, $alpha: 0.1);
         user-select: none;

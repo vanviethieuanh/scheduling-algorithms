@@ -32,6 +32,10 @@
             text-align: left;
         }
 
+        div {
+            user-select: none;
+        }
+
         #quantumn-time {
             max-width: 50px;
 
