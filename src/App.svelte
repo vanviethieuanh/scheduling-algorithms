@@ -135,6 +135,16 @@
             />
         </div>
         <Donate />
+
+        <p class="credit">
+            Design and created by Văn Viết Hiếu Anh - All images from
+            <a
+                href="https://unsplash.com/"
+                target="_blank"
+            >
+                <i class="fa-brands fa-unsplash" /> Unsplash
+            </a>
+        </p>
     </div>
 </main>
 
@@ -152,7 +162,23 @@
 
         backdrop-filter: blur(50px);
         background-color: rgba(0, 0, 50, 0.5);
-        height: 100%;
+        min-height: 100%;
+
+        .container {
+            padding-bottom: 0;
+        }
+    }
+
+    .credit {
+        color: white;
+        font-size: 0.8rem;
+        opacity: 0.2;
+
+        user-select: none;
+
+        a {
+            color: white;
+        }
     }
 
     .options {
