@@ -129,9 +129,11 @@
         padding: 1rem 0;
 
         opacity: 0.2;
+        font-size: 0.9rem;
 
         &.stamp {
             opacity: 1;
+            font-size: 1rem;
         }
 
         &.last {
