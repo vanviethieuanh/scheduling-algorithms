@@ -37,3 +37,4 @@ Cho cũng cảm ơn mà bấm ⭐ cũng cảm ơn nha. Tài khoản đều tên 
 - **Momo** 0946 378 852
 - **TPBank** 0946 378 852 *or* 0323 731 6401 *or* vanviethieuanh
 
+Disclaimer: This is not certified by any authority education organization. This is an independent and unofficial application. Use at your own risk.
